@@ -22,11 +22,11 @@ spec:
       name: admin
   type: LoadBalancer
   env:
-    - name: LOADBALANCERIP
+    - name: loadBalancerIP
       valueFrom:
         configMapKeyRef:
-          name: traefik-conf-internal
-          key: loadBalancerIP
+          name: traefik-conf
+          key: loadBalancerIPInternal
 ---
 apiVersion: extensions/v1beta1
 kind: Ingress
@@ -36,11 +36,11 @@ metadata:
 spec:
   rules:
     env:
-      - name: HOST
+      - name: host
         valueFrom:
           configMapKeyRef:
-            name: traefik-conf-internal
-            key: host
+            name: traefik-conf
+            key: hostInternal
     http:
       paths:
       - path: /

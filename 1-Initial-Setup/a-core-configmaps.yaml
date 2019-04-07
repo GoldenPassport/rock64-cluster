@@ -15,15 +15,6 @@ data:
 apiVersion: v1
 kind: ConfigMap
 metadata:
-  name: traefik-conf-internal
-  namespace: kube-system
-data:
-  loadBalancerIP: 192.168.1.20
-  host: "traefik-internal.goldenpassport.net"
----
-apiVersion: v1
-kind: ConfigMap
-metadata:
   name: traefik-conf
   namespace: kube-system
 data:
