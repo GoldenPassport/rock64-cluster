@@ -35,12 +35,12 @@ metadata:
   namespace: kube-system
 spec:
   rules:
-    - env:
-        - name: HOST
-          valueFrom:
-            configMapKeyRef:
-              name: traefik-conf-internal
-              key: host
+    env:
+      - name: HOST
+        valueFrom:
+          configMapKeyRef:
+            name: traefik-conf-internal
+            key: host
     http:
       paths:
       - path: /
