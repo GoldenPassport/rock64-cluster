@@ -1,0 +1,71 @@
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: config
+  namespace: metallb-system
+data:
+  config: |
+    address-pools:
+    - name: default
+      protocol: layer2
+      addresses:
+      - 192.168.1.16/28
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: traefik-conf-internal
+  namespace: kube-system
+data:
+  loadBalancerIP: 192.168.1.20
+  host: "traefik-internal.goldenpassport.net"
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: traefik-conf
+  namespace: kube-system
+data:
+  loadBalancerIPInternal: 192.168.1.20
+  hostInternal: "traefik-internal.goldenpassport.net"
+  traefik.toml: |
+    defaultEntryPoints = ["http","https"]
+    debug = false
+    logLevel = "INFO"
+
+    # Do not verify backend certificates (use https backends)
+    InsecureSkipVerify = true
+
+    [entryPoints]
+      [entryPoints.http]
+      address = ":80"
+      compress = true
+      [entryPoints.https]
+      address = ":443"
+        [entryPoints.https.tls]
+
+    #Config to redirect http to https
+    #[entryPoints]
+    #  [entryPoints.http]
+    #  address = ":80"
+    #  compress = true
+    #    [entryPoints.http.redirect]
+    #    entryPoint = "https"
+    #  [entryPoints.https]
+    #  address = ":443"
+    #    [entryPoints.https.tls]
+
+    [web]
+      address = ":8080"
+
+    [kubernetes]
+
+    [accessLog]
+
+    [metrics]
+      [metrics.prometheus]
+      buckets=[0.1,0.3,1.2,5.0]
+      entryPoint = "traefik"
+
+    [ping]
