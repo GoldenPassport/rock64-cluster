@@ -31,7 +31,7 @@ kctl() {
 kctl apply -f a-core-configmaps.yaml
 
 # B. MetalLB
-kubectl apply -f https://raw.githubusercontent.com/google/metallb/v0.7.3/manifests/metallb.yaml --namespace=metallb-system
+kubectl apply -f --namespace=metallb-system https://raw.githubusercontent.com/google/metallb/v0.7.3/manifests/metallb.yaml
 
 # C. Traefik (Internal)
 kctl apply -f c-traefik-rbac.yaml
