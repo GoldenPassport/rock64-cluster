@@ -14,7 +14,7 @@ metadata:
     ingress.kubernetes.io/auth-secret: ingress-auth
 spec:
   rules:
-  - host: dashboard.cloud.carlosedp.com
+  - host: dashboard.goldenpassport.net
     http:
       paths:
       - path: /
