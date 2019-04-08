@@ -28,7 +28,7 @@ kctl() {
 #
 
 # B. MetalLB (MetalLB needs to be loaded first)
-kubectl apply -f --namespace=metallb-system https://raw.githubusercontent.com/google/metallb/v0.7.3/manifests/metallb.yaml
+kubectl apply -f https://raw.githubusercontent.com/google/metallb/v0.7.3/manifests/metallb.yaml
 
 # A. Core Configmaps
 kctl apply -f a-core-configmaps.yaml
