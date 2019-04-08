@@ -23,11 +23,16 @@ mkdir -p $HOME/.kube
 sudo cp /etc/kubernetes/admin.conf $HOME/.kube/config
 sudo chown $(id -u):$(id -g) $HOME/.kube/config
 
+sleep 2s
+
 kubectl taint nodes --all node-role.kubernetes.io/master-
+
+sleep 10s
 
 # Install Flannel
 kubectl apply -f https://raw.githubusercontent.com/coreos/flannel/a70459be0084506e4ec919aa1c114638878db11b/Documentation/kube-flannel.yml
 
+sleep 5s
 #
 # Background Complete
 #
