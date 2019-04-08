@@ -9,6 +9,7 @@ kubectl delete node rock3
 kubectl drain rock4 --delete-local-data --force --ignore-daemonsets
 kubectl delete node rock4
 
+echo "Root password"
 su root
 kubeadm reset -f
 iptables -F && iptables -t nat -F && iptables -t mangle -F && iptables -X
