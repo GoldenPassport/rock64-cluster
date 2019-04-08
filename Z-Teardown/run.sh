@@ -1,5 +1,10 @@
 #!/bin/bash
 
+su rock
+mkdir -p $HOME/.kube
+sudo cp -i /etc/kubernetes/admin.conf $HOME/.kube/config
+sudo chown $(id -u):$(id -g) $HOME/.kube/config
+
 kubectl drain rock1 --delete-local-data --force --ignore-daemonsets
 kubectl delete node rock1
 kubectl drain rock2 --delete-local-data --force --ignore-daemonsets
