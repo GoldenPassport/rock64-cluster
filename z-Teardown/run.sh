@@ -1,9 +1,5 @@
 #!/bin/bash
 
-echo "####################################"
-echo "### Need to be logged in as root ###"
-echo "####################################"
-
 kubectl drain rock1 --delete-local-data --force --ignore-daemonsets
 kubectl delete node rock1
 kubectl drain rock2 --delete-local-data --force --ignore-daemonsets
