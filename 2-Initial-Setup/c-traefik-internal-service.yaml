@@ -30,7 +30,7 @@ metadata:
   namespace: kube-system
 spec:
   rules:
-  - host: traefik.internal.carlosedp.com
+  - host: traefik.goldenpassport.net
     http:
       paths:
       - path: /
