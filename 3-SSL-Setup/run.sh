@@ -18,7 +18,7 @@ kctl() {
 if ! [ -x "$(command -v helm)" ]; then
   # echo 'Error: helm is not installed. It is required to deploy the Consul cluster.' >&2
   # exit 1
-  sudo get_helm_client.sh
+  sudo bash get_helm_client.sh
   sleep 5s
 fi
 
