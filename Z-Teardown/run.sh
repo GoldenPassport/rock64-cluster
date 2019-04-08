@@ -11,4 +11,4 @@ kubectl delete node rock4
 
 sudo kubeadm reset -f
 
-iptables -F && iptables -t nat -F && iptables -t mangle -F && iptables -X
+sudo iptables -F && iptables -t nat -F && iptables -t mangle -F && iptables -X
