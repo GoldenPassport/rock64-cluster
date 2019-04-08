@@ -45,7 +45,7 @@ data:
       prefix = "traefik-external"
 
     [acme]
-      email = "luke.audie@gmail.com
+      email = "luke.audie@gmail.com"
       storage = "traefik-external-certificates/acme/account"
       acmeLogging = true
       entryPoint = "https"
