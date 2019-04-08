@@ -39,6 +39,9 @@ kctl apply -f c-traefik-rbac.yaml
 kctl apply -f c-traefik-internal-service.yaml
 kctl apply -f c-traefik-internal-deployment.yaml
 
+# D. Dashboard
+
+kctl apply -f ./d-*
 
 
 
