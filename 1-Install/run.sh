@@ -78,8 +78,6 @@ usermod -aG docker $USER
 kubeadm config images pull
 kubeadm init --pod-network-cidr=10.244.0.0/16
 
-sleep 5s
-
 #
 # C. Post Install Setup
 #
