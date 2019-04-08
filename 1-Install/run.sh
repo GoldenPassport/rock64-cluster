@@ -80,9 +80,9 @@ sleep 5s
 
 sysctl net.bridge.bridge-nf-call-iptables=1
 
-#mkdir -p /home/rock/.kube
-#sudo cp /etc/kubernetes/admin.conf /home/rock/.kube/config
-#sudo chown $(id -u):$(id -g) /home/rock/.kube/config
+mkdir -p /home/rock/.kube
+cp /etc/kubernetes/admin.conf /home/rock/.kube/config
+chown $(id -u):$(id -g) /home/rock/.kube/config
 
 # su - rock -c ""
 kubectl taint nodes --all node-role.kubernetes.io/master-
