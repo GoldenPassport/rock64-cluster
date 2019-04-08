@@ -13,6 +13,8 @@ echo ""
 
 set -xeo pipefail
 
+apt update && apt upgrade
+
 #
 # A. Install Docker CE
 #
@@ -31,7 +33,7 @@ sudo add-apt-repository \
    stable"
 
 ## Install Docker CE.
-apt-get update && apt-get install docker-ce docker-compose 
+apt-get install -y docker-ce docker-compose 
 
 # Setup daemon.
 cat > /etc/docker/daemon.json <<EOF
@@ -61,7 +63,6 @@ cat <<EOF >/etc/apt/sources.list.d/kubernetes.list
 deb http://apt.kubernetes.io/ kubernetes-xenial main
 EOF
 
-apt-get update -y
 apt-get install -y kubelet kubeadm kubectl
 apt-mark hold kubelet kubeadm kubectl
 
