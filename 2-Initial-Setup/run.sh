@@ -29,9 +29,6 @@ sleep 2s
 kubectl apply -f https://raw.githubusercontent.com/coreos/flannel/a70459be0084506e4ec919aa1c114638878db11b/Documentation/kube-flannel.yml
 sleep 5s
 
-kubectl taint nodes --all node-role.kubernetes.io/master-
-sleep 2s
-
 #
 # Background Complete
 #
@@ -58,6 +55,10 @@ kctl apply -f d-dashboard-admin-account.yaml
 kctl apply -f d-dashboard.yaml
 kctl apply -f d-dashboard-ingress.yaml
 kctl apply -f d-external-ingress.yaml
+
+sleep 10s
+
+kubectl taint nodes --all node-role.kubernetes.io/master-
 
 
 
