@@ -55,12 +55,6 @@ systemctl restart docker
 # B. Install Kubernetes
 #
 
-# Install firewall
-# apt install firewalld
-# systemctl start firewalld
-# systemctl enable firewalld
-
-
 curl -s https://packages.cloud.google.com/apt/doc/apt-key.gpg | apt-key add -
 
 cat <<EOF >/etc/apt/sources.list.d/kubernetes.list
