@@ -80,12 +80,17 @@ sleep 5s
 
 sysctl net.bridge.bridge-nf-call-iptables=1
 
-mkdir -p /home/rock/.kube
-cp /etc/kubernetes/admin.conf /home/rock/.kube/config
-chown $(id -u):$(id -g) /home/rock/.kube/config
+# mkdir -p /home/rock/.kube
+# cp /etc/kubernetes/admin.conf /home/rock/.kube/config
+# chown $(id -u):$(id -g) /home/rock/.kube/config
+su - rock -c "mkdir -p $HOME/.kube"
+su - rock -c "cp /etc/kubernetes/admin.conf $HOME/.kube/config"
+su - rock -c "chown $(id -u):$(id -g) $HOME/.kube/config"
 
 # su - rock -c ""
-kubectl taint nodes --all node-role.kubernetes.io/master-
+# kubectl taint nodes --all node-role.kubernetes.io/master-
+su - rock -c "kubectl taint nodes --all node-role.kubernetes.io/master-"
 
 # Install Flannel
-kubectl apply -f https://raw.githubusercontent.com/coreos/flannel/a70459be0084506e4ec919aa1c114638878db11b/Documentation/kube-flannel.yml
+# kubectl apply -f https://raw.githubusercontent.com/coreos/flannel/a70459be0084506e4ec919aa1c114638878db11b/Documentation/kube-flannel.yml
+su - rock -c "kubectl apply -f https://raw.githubusercontent.com/coreos/flannel/a70459be0084506e4ec919aa1c114638878db11b/Documentation/kube-flannel.yml"
