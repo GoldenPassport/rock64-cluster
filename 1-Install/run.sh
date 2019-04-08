@@ -13,7 +13,11 @@ echo ""
 
 set -xeo pipefail
 
+# Update
 apt update && apt upgrade
+
+# Reset ip tables
+iptables -F && iptables -t nat -F && iptables -t mangle -F && iptables -X
 
 #
 # A. Install Docker CE
