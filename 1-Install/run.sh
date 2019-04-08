@@ -67,6 +67,10 @@ usermod -aG docker $USER
 kubeadm config images pull
 kubeadm init --pod-network-cidr=10.244.0.0/16
 
+sleep 5s
+
+kubectl taint nodes --all node-role.kubernetes.io/master-
+
 #
 # C. Post Install Setup
 #
@@ -80,7 +84,3 @@ sudo chown $(id -u):$(id -g) $HOME/.kube/config
 
 # Install Flannel
 kubectl apply -f https://raw.githubusercontent.com/coreos/flannel/a70459be0084506e4ec919aa1c114638878db11b/Documentation/kube-flannel.yml
-
-# Update Packages
-apt-get update
-apt-get upgrade
