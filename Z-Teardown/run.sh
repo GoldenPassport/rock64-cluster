@@ -2,9 +2,9 @@
 
 echo "### Need to be logged in as root"
 
-su - rock -c "mkdir -p $HOME/.kube"
-su - rock -c "sudo cp /etc/kubernetes/admin.conf $HOME/.kube/config"
-su - rock -c "sudo chown $(id -u):$(id -g) $HOME/.kube/config"
+# su - rock -c "mkdir -p $HOME/.kube"
+# su - rock -c "sudo cp /etc/kubernetes/admin.conf $HOME/.kube/config"
+# su - rock -c "sudo chown $(id -u):$(id -g) $HOME/.kube/config"
 
 su - rock -c "kubectl drain rock1 --delete-local-data --force --ignore-daemonsets"
 su - rock -c "kubectl delete node rock1"
