@@ -1,4 +1,9 @@
 #!/bin/bash
+
+echo "####################################"
+echo "### Need to be logged in as root ###"
+echo "####################################"
+
 echo "Container Linux installation script"
 echo "This will install:"
 echo " - Docker Community Edition"
@@ -75,11 +80,11 @@ sleep 5s
 
 sysctl net.bridge.bridge-nf-call-iptables=1
 
-su rock
-mkdir -p $HOME/.kube
-sudo cp /etc/kubernetes/admin.conf $HOME/.kube/config
-sudo chown $(id -u):$(id -g) $HOME/.kube/config
+mkdir -p /home/rock/.kube
+sudo cp /etc/kubernetes/admin.conf /home/rock/.kube/config
+sudo chown $(id -u):$(id -g) /home/rock/.kube/config
 
+# su - rock -c ""
 kubectl taint nodes --all node-role.kubernetes.io/master-
 
 # Install Flannel

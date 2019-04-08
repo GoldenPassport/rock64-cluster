@@ -22,9 +22,6 @@ kctl() {
 # Background Complete
 #
 
-
-
-
 #
 # Setup (A - C)
 #
