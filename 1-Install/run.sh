@@ -20,7 +20,7 @@ apt update && apt upgrade
 iptables -F && iptables -t nat -F && iptables -t mangle -F && iptables -X
 
 #
-# A. Install Docker CE
+# Install Docker CE
 #
 
 ## Set up the repository:
@@ -58,8 +58,30 @@ systemctl daemon-reload
 systemctl restart docker
 
 #
-# B. Install Kubernetes
+# Install Kubernetes
 #
+
+# Uninstall current packages
+if apt-get -qq install kubelet; then
+    apt-get remove  kubelet
+    echo "Successfully removed kubelet"
+else
+    echo "kubelet not installed."
+fi
+
+if apt-get -qq install kubeadm; then
+    apt-get remove  kubeadm
+    echo "Successfully removed kubeadm"
+else
+    echo "kubeadm not installed."
+fi
+
+if apt-get -qq install kubectl; then
+    apt-get remove  kubectl
+    echo "Successfully removed kubectl"
+else
+    echo "kubectl not installed."
+fi
 
 curl -s https://packages.cloud.google.com/apt/doc/apt-key.gpg | apt-key add -
 
@@ -72,13 +94,14 @@ apt-mark hold kubelet kubeadm kubectl
 
 # Add User to Docker Group
 usermod -aG docker $USER
+usermod -aG docker rock
 
 # Init Kubernetes
 kubeadm config images pull
 kubeadm init --pod-network-cidr=10.244.0.0/16
 
 #
-# C. Post Install Setup
+# Post Install Setup
 #
 
 sysctl net.bridge.bridge-nf-call-iptables=1
