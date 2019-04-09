@@ -19,8 +19,8 @@ if ! [ -x "$(command -v helm)" ]; then
   # echo 'Error: helm is not installed. It is required to deploy the Consul cluster.' >&2
   # exit 1
   sudo curl https://raw.githubusercontent.com/helm/helm/master/scripts/get > get_helm.sh
-  chmod 700 get_helm.sh
-  ./get_helm.sh
+  sudo chmod 700 get_helm.sh
+  sudo ./get_helm.sh
   sleep 5s
 fi
 
