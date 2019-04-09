@@ -22,7 +22,9 @@ helm init --service-account tiller --tiller-image jessestuart/tiller
 # Patch Helm to land on an ARM node because of the used image
 kubectl patch deployment tiller-deploy -n kube-system --patch '{"spec": {"template": {"spec": {"nodeSelector": {"beta.kubernetes.io/arch": "arm64"}}}}}'
 
-sudo helm install --name consul-traefik stable/consul --set ImageTag=1.4.3
+sudo helm del --purge consul-traefik
+sleep 5s
+sudo helm install --name consul-traefik stable/consul --set ImageTag=1.4.3 --namespace kube-system
 sleep 20s
 
 # Deploy Traefik INGRESS
