@@ -19,6 +19,11 @@ apt update && apt upgrade
 # Reset ip tables
 iptables -F && iptables -t nat -F && iptables -t mangle -F && iptables -X
 
+# Disable swap
+sudo swapoff -a 
+sudo sed -i '/ swap / s/^\(.*\)$/#\1/g' /etc/fstab
+systemctl disable armbian-zram-config.service
+
 #
 # Install Docker CE
 #
