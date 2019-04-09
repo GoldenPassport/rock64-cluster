@@ -15,23 +15,20 @@ kctl() {
     kubectl --namespace "$NAMESPACE" "$@"
 }
 
-if ! [ -x "$(command -v helm)" ]; then
-  # echo 'Error: helm is not installed. It is required to deploy the Consul cluster.' >&2
-  # exit 1
-  sudo curl https://raw.githubusercontent.com/helm/helm/master/scripts/get > get_helm.sh
-  sudo chmod 700 get_helm.sh
-  sudo ./get_helm.sh
-  sleep 5s
-fi
+sudo helm repo update
 
 kubectl create -f rbac-config.yaml
 helm init --service-account tiller --tiller-image jessestuart/tiller
 # Patch Helm to land on an ARM node because of the used image
 kubectl patch deployment tiller-deploy -n kube-system --patch '{"spec": {"template": {"spec": {"nodeSelector": {"beta.kubernetes.io/arch": "arm64"}}}}}'
 
-helm install --name consul-traefik stable/consul --set ImageTag=1.4.3
-
+sudo helm install --name consul-traefik stable/consul --set ImageTag=1.4.3
 sleep 20s
+
+# Deploy Traefik INGRESS
+kctl apply -f external-traefik-ingress.yaml
+sleep 10s
+
 # Deploy Traefik RBAC
 kctl apply -f traefik-rbac.yaml
 

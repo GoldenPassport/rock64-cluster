@@ -106,8 +106,20 @@ usermod -aG docker rock
 kubeadm config images pull
 kubeadm init --pod-network-cidr=10.244.0.0/16
 
+sleep 10s
+
 #
 # Post Install Setup
 #
 
 sysctl net.bridge.bridge-nf-call-iptables=1
+
+# Install helm
+if ! [ -x "$(command -v helm)" ]; then
+  # echo 'Error: helm is not installed. It is required to deploy the Consul cluster.' >&2
+  # exit 1
+  curl https://raw.githubusercontent.com/helm/helm/master/scripts/get > get_helm.sh
+  chmod 700 get_helm.sh
+  ./get_helm.sh
+  sleep 5s
+fi
