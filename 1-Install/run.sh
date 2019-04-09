@@ -68,6 +68,7 @@ systemctl restart docker
 
 # Uninstall current packages
 if apt-get -qq install kubelet; then
+    apt-mark unhold kubelet
     apt-get purge kubelet
     echo "Successfully removed kubelet"
 else
@@ -75,6 +76,7 @@ else
 fi
 
 if apt-get -qq install kubeadm; then
+    apt-mark unhold kubeadm
     apt-get purge kubeadm
     echo "Successfully removed kubeadm"
 else
@@ -82,6 +84,7 @@ else
 fi
 
 if apt-get -qq install kubectl; then
+    apt-mark unhold kubectl
     apt-get purge kubectl
     echo "Successfully removed kubectl"
 else
@@ -95,7 +98,7 @@ deb http://apt.kubernetes.io/ kubernetes-xenial main
 EOF
 
 apt-get install -y --allow-change-held-packages kubelet kubeadm kubectl
-apt-mark hold kubelet kubeadm kubectl
+# apt-mark hold kubelet kubeadm kubectl
 
 # Add User to Docker Group
 usermod -aG docker $USER
