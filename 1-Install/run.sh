@@ -68,21 +68,21 @@ systemctl restart docker
 
 # Uninstall current packages
 if apt-get -qq install kubelet; then
-    apt-get remove  kubelet
+    apt-get purge kubelet
     echo "Successfully removed kubelet"
 else
     echo "kubelet not installed."
 fi
 
 if apt-get -qq install kubeadm; then
-    apt-get remove  kubeadm
+    apt-get purge kubeadm
     echo "Successfully removed kubeadm"
 else
     echo "kubeadm not installed."
 fi
 
 if apt-get -qq install kubectl; then
-    apt-get remove  kubectl
+    apt-get purge kubectl
     echo "Successfully removed kubectl"
 else
     echo "kubectl not installed."
