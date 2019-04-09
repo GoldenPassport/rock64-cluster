@@ -89,7 +89,7 @@ cat <<EOF >/etc/apt/sources.list.d/kubernetes.list
 deb http://apt.kubernetes.io/ kubernetes-xenial main
 EOF
 
-apt-get install -y kubelet kubeadm kubectl
+apt-get install -y --allow-change-held-packages kubelet kubeadm kubectl
 apt-mark hold kubelet kubeadm kubectl
 
 # Add User to Docker Group
