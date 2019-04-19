@@ -18,7 +18,7 @@ kctl() {
 sudo helm repo update
 
 kubectl create -f rbac-config.yaml
-helm init --service-account tiller --tiller-image jessestuart/tiller --client-only --upgrade
+helm init --service-account tiller --tiller-image jessestuart/tiller --upgrade
 # Patch Helm to land on an ARM node because of the used image
 kubectl patch deployment tiller-deploy -n kube-system --patch '{"spec": {"template": {"spec": {"nodeSelector": {"beta.kubernetes.io/arch": "arm64"}}}}}'
 
@@ -38,8 +38,11 @@ kctl apply -f traefik-rbac.yaml
 # Deploy external Traefik config and store it into Consul
 kctl apply -f external-traefik-configmap.yaml
 sleep 5s
-kctl apply -f job-storeConfigMap-to-KV.yaml
 
 # Deploy external Traefik and it's service
 kctl apply -f external-traefik-service.yaml
 kctl apply -f external-traefik-statefulset.yaml
+
+# Setup KvStore
+sleep 30s
+kctl apply -f job-storeConfigMap-to-KV.yaml
