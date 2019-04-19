@@ -51,5 +51,6 @@ data:
       entryPoint = "https"
       OnHostRule = true
       caServer = "https://acme-staging-v02.api.letsencrypt.org/directory"
-      [acme.httpChallenge]
-        entryPoint="http"
+      [acme.tlsChallenge]
+      #[acme.httpChallenge]
+        #entryPoint="http"
