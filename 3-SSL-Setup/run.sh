@@ -25,8 +25,8 @@ kubectl patch deployment tiller-deploy -n kube-system --patch '{"spec": {"templa
 sleep 20s
 sudo helm del --purge consul-traefik
 sleep 5s
-# ImageTag=1.4.3
-sudo helm install --name consul-traefik stable/consul --set ImageTag=1.7.10 --namespace kube-system
+# --set ImageTag=1.4.3
+sudo helm install --name consul-traefik stable/consul --namespace kube-system
 
 # Deploy Traefik INGRESS
 kctl apply -f external-traefik-ingress.yaml
