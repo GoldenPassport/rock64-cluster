@@ -39,19 +39,9 @@ sleep 10s
 # Setup
 #
 
-# Core Configmaps
-kctl apply -f core-configmaps.yaml
-
 # MetalLB
+kubectl apply -f metallb.yaml
 kubectl apply -f https://raw.githubusercontent.com/google/metallb/v0.7.3/manifests/metallb.yaml
-kubectl apply -f metallb-configmap.yaml
-
-# Traefik (Internal)
-kctl apply -f traefik-rbac.yaml
-kctl apply -f traefik-internal-service.yaml
-kctl apply -f traefik-internal-deployment.yaml
 
 # Dashboard
-kctl apply -f dashboard-admin-account.yaml
 kctl apply -f dashboard.yaml
-#kctl apply -f dashboard-ingress.yaml
