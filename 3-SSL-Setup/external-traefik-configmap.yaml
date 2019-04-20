@@ -54,5 +54,5 @@ data:
     [acme.httpChallenge]
       entryPoint = "http"
     
-    [[acme.domains]]
-      main = "*.goldenpassport.net"
+    #[[acme.domains]]
+      #main = "*.goldenpassport.net"
