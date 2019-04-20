@@ -28,7 +28,17 @@ sleep 5s
 # Helm / Consul
 #
 sudo helm repo update
-helm init --service-account tiller --tiller-image jessestuart/tiller --upgrade
+sudo helm reset --force
+
+cat <<EOF | kubectl create -f -
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: tiller
+  namespace: kube-system
+EOF
+
+sudo helm init --service-account tiller --tiller-image jessestuart/tiller
 # Patch Helm to land on an ARM node because of the used image
 kubectl patch deployment tiller-deploy -n kube-system --patch '{"spec": {"template": {"spec": {"nodeSelector": {"beta.kubernetes.io/arch": "arm64"}}}}}'
 sleep 60s
@@ -40,6 +50,35 @@ sleep 30s
 # Traefik
 #
 
-kctl apply -f traefik-part1.yaml
+kctl apply -f traefik.yaml
 sleep 60s
-kctl apply -f traefik-part2.yaml
+
+cat <<EOF | kubectl create -f -
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: traefik-kv-store
+  namespace: kube-system
+spec:
+  backoffLimit: 3
+  activeDeadlineSeconds: 100
+  ttlSecondsAfterFinished: 5
+  template:
+    metadata:
+      name: traefik-kv-store
+    spec:
+      containers:
+      - name: storeconfig
+        image: traefik:v1.7
+        imagePullPolicy: IfNotPresent
+        args: [ "storeconfig", "-c", "/config/traefik.toml" ]
+        volumeMounts:
+        - name: config
+          mountPath: /etc/traefik
+          readOnly: true
+      restartPolicy: Never
+      volumes:
+      - name: config
+        configMap:
+          name: traefik-conf-external
+EOF

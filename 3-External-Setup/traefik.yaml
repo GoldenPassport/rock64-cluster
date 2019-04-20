@@ -60,15 +60,6 @@ data:
       #main = "*.goldenpassport.net"
 
 ---
-# ------------------- Traefik ServiceAccount ------------------- #
-
-apiVersion: v1
-kind: ServiceAccount
-metadata:
-  name: tiller
-  namespace: kube-system
-
----
 # ------------------- Traefik/Tiller Role & Role Binding ------------------- #
 
 kind: ClusterRole
