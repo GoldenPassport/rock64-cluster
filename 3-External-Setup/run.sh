@@ -30,13 +30,8 @@ sleep 5s
 sudo helm repo update
 sudo helm reset
 
-cat <<EOF | kubectl create --namespace="kube-system" -f -
-apiVersion: v1
-kind: ServiceAccount
-metadata:
-  name: tiller
-  namespace: kube-system
-EOF
+# Tiller role
+kctl apply -f tiller.yaml
 
 sudo helm init --service-account tiller --tiller-image jessestuart/tiller
 # Patch Helm to land on an ARM node because of the used image
