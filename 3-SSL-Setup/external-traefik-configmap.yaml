@@ -13,12 +13,10 @@ data:
     [entryPoints]
       [entryPoints.http]
         address = ":80"
-        compress = true
         [entryPoints.http.redirect]
         entryPoint = "https"
       [entryPoints.https]
         address = ":443"
-        compress = true
         [entryPoints.https.tls]
 
     [api]
@@ -45,15 +43,16 @@ data:
       prefix = "traefik-external"
 
     [acme]
-      email = "luke.audie@gmail.com"
-      storage = "traefik-external-certificates/acme/account"
-      acmeLogging = true
-      entryPoint = "https"
-      #onHostRule = true
-      onDemand = true
-      caServer = "https://acme-staging-v02.api.letsencrypt.org/directory"
-      #[acme.tlsChallenge]
-        [acme.httpChallenge]
-          entryPoint = "http"
-      [[acme.domains]]
-        main = "*.goldenpassport.net"
+    email = "luke.audie@gmail.com"
+    storage = "traefik-external-certificates/acme/account"
+    acmeLogging = true
+    #onHostRule = true
+    onDemand = true
+    caServer = "https://acme-staging-v02.api.letsencrypt.org/directory"
+    entryPoint = "https"
+    
+    [acme.httpChallenge]
+      entryPoint = "http"
+    
+    [[acme.domains]]
+      main = "*.goldenpassport.net"
