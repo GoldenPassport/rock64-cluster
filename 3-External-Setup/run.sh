@@ -28,9 +28,9 @@ sleep 5s
 # Helm / Consul
 #
 sudo helm repo update
-sudo helm reset --force
+sudo helm reset
 
-cat <<EOF | kubectl create -f -
+cat <<EOF | kubectl create --namespace="kube-system" -f -
 apiVersion: v1
 kind: ServiceAccount
 metadata:
@@ -41,7 +41,7 @@ EOF
 sudo helm init --service-account tiller --tiller-image jessestuart/tiller
 # Patch Helm to land on an ARM node because of the used image
 kubectl patch deployment tiller-deploy -n kube-system --patch '{"spec": {"template": {"spec": {"nodeSelector": {"beta.kubernetes.io/arch": "arm64"}}}}}'
-sleep 60s
+sleep 30s
 
 sudo helm install --name consul-traefik stable/consul --set ImageTag=1.4.4 --namespace kube-system
 sleep 30s
