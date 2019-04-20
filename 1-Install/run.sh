@@ -122,3 +122,5 @@ if ! [ -x "$(command -v helm)" ]; then
   chmod 700 get_helm.sh
   ./get_helm.sh
 fi
+
+apt autoremove
