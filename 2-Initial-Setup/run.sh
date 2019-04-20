@@ -54,4 +54,4 @@ kctl apply -f traefik-internal-deployment.yaml
 # Dashboard
 kctl apply -f dashboard-admin-account.yaml
 kctl apply -f dashboard.yaml
-kctl apply -f dashboard-ingress.yaml
+#kctl apply -f dashboard-ingress.yaml
