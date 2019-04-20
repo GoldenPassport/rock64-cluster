@@ -60,6 +60,15 @@ data:
       #main = "*.goldenpassport.net"
 
 ---
+
+# ------------------- Traefik ServiceAccount ------------------- #
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: traefik-ingress-controller
+  namespace: kube-system
+
+---
 # ------------------- Traefik Role & Role Binding ------------------- #
 
 kind: ClusterRole
