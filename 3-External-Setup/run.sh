@@ -16,6 +16,15 @@ kctl() {
 }
 
 #
+# NFS-Storage
+#
+
+kubectl apply -f nfs-storage.yaml
+kubectl patch storageclass nfs-ssd1 -p '{"metadata": {"annotations":{"storageclass.kubernetes.io/is-default-class":"true"}}}'
+kubectl patch deployment nfs-client-provisioner -n nfs-storage --patch '{"spec": {"template": {"spec": {"nodeSelector": {"beta.kubernetes.io/arch": "arm64"}}}}}'
+sleep 5s
+
+#
 # Helm / Consul
 #
 sudo helm repo update
@@ -31,12 +40,6 @@ sleep 5s
 
 sudo helm install --name consul-traefik stable/consul --set ImageTag=1.4.4 --namespace kube-system
 sleep 60s
-
-#
-# NFS-Storage
-#
-
-kctl apply -f nfs-storage.yaml
 
 #
 # Traefik
