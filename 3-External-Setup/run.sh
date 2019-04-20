@@ -33,6 +33,12 @@ sudo helm install --name consul-traefik stable/consul --set ImageTag=1.4.4 --nam
 sleep 60s
 
 #
+# NFS-Storage
+#
+
+kctl apply -f nfs-storage.yaml
+
+#
 # Traefik
 #
 
