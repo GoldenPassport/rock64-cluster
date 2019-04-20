@@ -1,4 +1,5 @@
 #!/bin/bash
+sudo helm del --purge consul-traefik
 
 kubectl drain rock1 --delete-local-data --force --ignore-daemonsets
 kubectl delete node rock1

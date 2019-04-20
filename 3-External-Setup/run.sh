@@ -45,26 +45,6 @@ sleep 60s
 # Traefik
 #
 
-kctl apply -f traefik.yaml
-
-# Deploy Traefik INGRESS
-#kctl apply -f external-traefik-ingress.yaml
-#sleep 10s
-
-# Deploy Traefik RBAC
-#kctl apply -f traefik-rbac.yaml
-
-# Deploy external Traefik config and store it into Consul
-#kctl apply -f external-traefik-configmap.yaml
-#sleep 5s
-
-# Deploy external Traefik and it's service
-#kctl apply -f external-traefik-service.yaml
-#kctl apply -f external-traefik-statefulset.yaml
-
-# Dashboard (External)
-#kctl apply -f external-ingress.yaml
-
-# Setup KvStore
-#sleep 60s
-#kctl apply -f job-storeConfigMap-to-KV.yaml
+kctl apply -f traefik-part1.yaml
+sleep 60s
+kctl apply -f traefik-part2.yaml
