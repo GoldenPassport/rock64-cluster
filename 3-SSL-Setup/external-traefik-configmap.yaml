@@ -49,10 +49,11 @@ data:
       storage = "traefik-external-certificates/acme/account"
       acmeLogging = true
       entryPoint = "https"
-      onHostRule = true
+      #onHostRule = true
+      onDemand = true
       caServer = "https://acme-staging-v02.api.letsencrypt.org/directory"
       #[acme.tlsChallenge]
+        [acme.httpChallenge]
+          entryPoint = "http"
       [[acme.domains]]
         main = "*.goldenpassport.net"
-      #[acme.httpChallenge]
-        #entryPoint="http"
