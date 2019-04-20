@@ -43,6 +43,9 @@ sleep 5s
 kctl apply -f external-traefik-service.yaml
 kctl apply -f external-traefik-statefulset.yaml
 
+# Dashboard (External)
+kctl apply -f external-ingress.yaml
+
 # Setup KvStore
 sleep 60s
 kctl apply -f job-storeConfigMap-to-KV.yaml

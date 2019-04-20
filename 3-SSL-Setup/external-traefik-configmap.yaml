@@ -46,9 +46,9 @@ data:
     email = "luke.audie@gmail.com"
     storage = "traefik-external-certificates/acme/account"
     acmeLogging = true
-    #onHostRule = true
-    onDemand = true
-    caServer = "https://acme-staging-v02.api.letsencrypt.org/directory"
+    onHostRule = true
+    #onDemand = true
+    #caServer = "https://acme-staging-v02.api.letsencrypt.org/directory"
     entryPoint = "https"
     
     [acme.httpChallenge]

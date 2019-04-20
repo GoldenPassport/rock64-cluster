@@ -40,27 +40,18 @@ sleep 10s
 #
 
 # Core Configmaps
-kctl apply -f a-core-configmaps.yaml
+kctl apply -f core-configmaps.yaml
 
 # MetalLB
 kubectl apply -f https://raw.githubusercontent.com/google/metallb/v0.7.3/manifests/metallb.yaml
-kubectl apply -f a-metallb-configmap.yaml
+kubectl apply -f metallb-configmap.yaml
 
 # Traefik (Internal)
-kctl apply -f c-traefik-rbac.yaml
-kctl apply -f c-traefik-internal-service.yaml
-kctl apply -f c-traefik-internal-deployment.yaml
+kctl apply -f traefik-rbac.yaml
+kctl apply -f traefik-internal-service.yaml
+kctl apply -f traefik-internal-deployment.yaml
 
 # Dashboard
-
-kctl apply -f d-dashboard-admin-account.yaml
-kctl apply -f d-dashboard.yaml
-kctl apply -f d-dashboard-ingress.yaml
-kctl apply -f d-external-ingress.yaml
-
-# sleep 10s
-
-# kubectl taint nodes --all node-role.kubernetes.io/master-
-
-
-
+kctl apply -f dashboard-admin-account.yaml
+kctl apply -f dashboard.yaml
+kctl apply -f dashboard-ingress.yaml
