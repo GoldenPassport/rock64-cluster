@@ -35,9 +35,6 @@ helm init --service-account tiller --tiller-image jessestuart/tiller --upgrade
 kubectl patch deployment tiller-deploy -n kube-system --patch '{"spec": {"template": {"spec": {"nodeSelector": {"beta.kubernetes.io/arch": "arm64"}}}}}'
 sleep 60s
 
-sudo helm del --purge consul-traefik
-sleep 5s
-
 sudo helm install --name consul-traefik stable/consul --set ImageTag=1.4.4 --namespace kube-system
 sleep 30s
 
