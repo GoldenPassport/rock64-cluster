@@ -64,7 +64,7 @@ data:
       #entryPoint = "http"
     
     #[[acme.domains]]
-      #main = "*.goldenpassport.net"
+      #main = "*.bpmcrowd.com"
 
 ---
 
@@ -154,7 +154,7 @@ metadata:
     traffic-type: internal
 spec:
   rules:
-  - host: traefik-ext.goldenpassport.net
+  - host: traefik-ext.bpmcrowd.com
     http:
       paths:
       - path: /
@@ -169,7 +169,7 @@ metadata:
   namespace: kube-system
 spec:
   rules:
-  - host: consul.goldenpassport.net
+  - host: consul.bpmcrowd.com
     http:
       paths:
       - path: /
@@ -193,7 +193,7 @@ metadata:
     #ingress.kubernetes.io/auth-secret: ingress-auth
 spec:
   rules:
-  - host: dashboard.goldenpassport.net
+  - host: dashboard.bpmcrowd.com
     http:
       paths:
       - path: /
@@ -253,6 +253,17 @@ spec:
         args:
         - --api
         - --configfile=/config/traefik.toml
+        env:
+          - name: GODADDY_API_KEY
+            valueFrom:
+              secretKeyRef:
+                key: key
+                name: traefik-external-provider
+          - name: GODADDY_API_SECRET
+            valueFrom:
+              secretKeyRef:
+                key: secret
+                name: traefik-external-provider
         livenessProbe:
           httpGet:
             path: /health

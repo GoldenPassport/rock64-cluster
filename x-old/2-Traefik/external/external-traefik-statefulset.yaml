@@ -52,12 +52,12 @@ spec:
             valueFrom:
               secretKeyRef:
                 key: key
-                name: traefik-external-godaddy
+                name: traefik-external-namecheap
           - name: GODADDY_API_SECRET
             valueFrom:
               secretKeyRef:
                 key: secret
-                name: traefik-external-godaddy
+                name: traefik-external-namecheap
         livenessProbe:
           httpGet:
             path: /health

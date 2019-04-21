@@ -7,4 +7,4 @@ echo "Please enter your GoDaddy secret";
 read -s secret;
 
 echo "Creating secret"
-kubectl create secret generic traefik-external-godaddy -n kube-system --from-literal=key=${key} --from-literal=secret=${secret}
+kubectl create secret generic traefik-external-namecheap -n kube-system --from-literal=key=${key} --from-literal=secret=${secret}

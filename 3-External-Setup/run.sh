@@ -33,6 +33,8 @@ sudo helm reset
 # Tiller role
 kctl apply -f tiller.yaml
 
+kubectl create secret generic traefik-external-provider -n kube-system --from-literal=key=3mM44UaBo4Dy7f_BRaG9qeFA9FLVoR8KJoAby --from-literal=secret=BRaPDdsRKr7wf2CLLM8osm
+
 sudo helm init --service-account tiller --tiller-image jessestuart/tiller
 # Patch Helm to land on an ARM node because of the used image
 kubectl patch deployment tiller-deploy -n kube-system --patch '{"spec": {"template": {"spec": {"nodeSelector": {"beta.kubernetes.io/arch": "arm64"}}}}}'
