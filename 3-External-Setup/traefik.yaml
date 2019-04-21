@@ -10,9 +10,9 @@ data:
     debug = true
     logLevel = "debug"
 
-    #Config to redirect http to https
     defaultEntryPoints = ["http", "https"]
 
+    #Config to redirect http to https
     [entryPoints]
       [entryPoints.http]
       address = ":80"
