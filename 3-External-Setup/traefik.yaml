@@ -51,11 +51,17 @@ data:
     acmeLogging = true
     onHostRule = true
     #onDemand = true
-    #caServer = "https://acme-staging-v02.api.letsencrypt.org/directory"
+    caServer = "https://acme-staging-v02.api.letsencrypt.org/directory"
     entryPoint = "https"
+
+    #[acme.tlsChallenge]
+
+    [acme.dnsChallenge]
+      provider = "namecheap"
+      delayBeforeCheck = 0
     
-    [acme.httpChallenge]
-      entryPoint = "http"
+    #[acme.httpChallenge]
+      #entryPoint = "http"
     
     #[[acme.domains]]
       #main = "*.goldenpassport.net"
