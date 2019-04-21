@@ -25,7 +25,7 @@ kubectl patch deployment nfs-client-provisioner -n nfs-storage --patch '{"spec":
 sleep 5s
 
 #
-# Helm / Consul
+# Tiller / Consul
 #
 sudo helm repo update
 sudo helm reset
@@ -38,6 +38,8 @@ sudo helm init --service-account tiller --tiller-image jessestuart/tiller
 kubectl patch deployment tiller-deploy -n kube-system --patch '{"spec": {"template": {"spec": {"nodeSelector": {"beta.kubernetes.io/arch": "arm64"}}}}}'
 sleep 30s
 
+# Consul
+sudo helm del --purge consul-traefik
 sudo helm install --name consul-traefik stable/consul --set ImageTag=1.4.4 --namespace kube-system
 sleep 30s
 
@@ -47,6 +49,8 @@ sleep 30s
 
 kctl apply -f traefik.yaml
 sleep 60s
+
+kubectl delete job traefik-kv-store
 
 cat <<EOF | kubectl create -f -
 apiVersion: batch/v1

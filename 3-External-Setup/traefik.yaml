@@ -7,18 +7,19 @@ metadata:
   namespace: kube-system
 data:
   traefik.toml: |
-    defaultEntryPoints = ["http","https"]
-    debug = false
-    logLevel = "INFO"
+    debug = true
+    logLevel = "debug"
 
     #Config to redirect http to https
+    defaultEntryPoints = ["http", "https"]
+
     [entryPoints]
       [entryPoints.http]
-        address = ":80"
+      address = ":80"
         [entryPoints.http.redirect]
         entryPoint = "https"
       [entryPoints.https]
-        address = ":443"
+      address = ":443"
         [entryPoints.https.tls]
 
     [api]
