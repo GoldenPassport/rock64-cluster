@@ -83,10 +83,10 @@ roleRef:
 apiVersion: storage.k8s.io/v1
 kind: StorageClass
 metadata:
-  name: nfs-network
+  name: nfs-storage
   annotations:
     storageclass.kubernetes.io/is-default-class: "true"
-provisioner: nfs-provisioner/nfs-network
+provisioner: nfs-provisioner/nfs-storage
 parameters:
   archiveOnDelete: "true"
 
@@ -117,11 +117,11 @@ spec:
               mountPath: /persistentvolumes
           env:
             - name: PROVISIONER_NAME
-              value: nfs-provisioner/nfs-network
+              value: nfs-provisioner/nfs-storage
             - name: NFS_SERVER
               value: 192.168.1.50
             - name: NFS_PATH
-              value: /media/network
+              value: /media/usb
       affinity:
         podAntiAffinity:
           preferredDuringSchedulingIgnoredDuringExecution:
@@ -139,4 +139,4 @@ spec:
         - name: nfs-client-root
           nfs:
             server: 192.168.1.50
-            path: /media/network
+            path: /media/media
