@@ -72,7 +72,7 @@ data:
 apiVersion: v1
 kind: ServiceAccount
 metadata:
-  name: traefik-ingress-controller
+  name: traefik-ingress-controller-external
   namespace: kube-system
 
 ---
@@ -81,7 +81,7 @@ metadata:
 kind: ClusterRole
 apiVersion: rbac.authorization.k8s.io/v1beta1
 metadata:
-  name: traefik-ingress-controller
+  name: traefik-ingress-controller-external
 rules:
   - apiGroups:
       - ""
@@ -105,14 +105,14 @@ rules:
 kind: ClusterRoleBinding
 apiVersion: rbac.authorization.k8s.io/v1beta1
 metadata:
-  name: traefik-ingress-controller
+  name: traefik-ingress-controller-external
 roleRef:
   apiGroup: rbac.authorization.k8s.io
   kind: ClusterRole
-  name: traefik-ingress-controller
+  name: traefik-ingress-controller-external
 subjects:
 - kind: ServiceAccount
-  name: traefik-ingress-controller
+  name: traefik-ingress-controller-external
   namespace: kube-system
 
 ---
@@ -223,7 +223,7 @@ spec:
         k8s-app: traefik-ingress-lb-external
         name: traefik-ingress-lb-external
     spec:
-      serviceAccountName: traefik-ingress-controller
+      serviceAccountName: traefik-ingress-controller-external
       terminationGracePeriodSeconds: 60
       # Remove the initContainer in case of a *big operation* to avoid inconsistencies when
       # starting multiple pods in parallel. Might be a case a pod starts with partial config
