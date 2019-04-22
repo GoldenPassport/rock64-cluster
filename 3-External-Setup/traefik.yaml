@@ -51,7 +51,7 @@ data:
     acmeLogging = true
     onHostRule = true
     #onDemand = true
-    caServer = "https://acme-staging-v02.api.letsencrypt.org/directory"
+    #caServer = "https://acme-staging-v02.api.letsencrypt.org/directory"
     entryPoint = "https"
 
     #[acme.tlsChallenge]
@@ -67,7 +67,6 @@ data:
       #main = "*.bpmcrowd.com"
 
 ---
-
 # ------------------- Traefik ServiceAccount ------------------- #
 apiVersion: v1
 kind: ServiceAccount
@@ -151,7 +150,7 @@ metadata:
   name: traefik-ingress-lb-external
   namespace: kube-system
   labels:
-    traffic-type: internal
+    traffic-type: external
 spec:
   rules:
   - host: traefik-ext.bpmcrowd.com
