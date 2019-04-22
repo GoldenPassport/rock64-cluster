@@ -77,6 +77,21 @@ roleRef:
   apiGroup: rbac.authorization.k8s.io
 
 ---
+
+# ------------------- NSF-Storage StorageClass ------------------- #
+
+apiVersion: storage.k8s.io/v1
+kind: StorageClass
+metadata:
+  name: nfs-network
+  annotations:
+    storageclass.kubernetes.io/is-default-class: "true"
+provisioner: nfs-provisioner/nfs-network
+parameters:
+  archiveOnDelete: "true"
+
+---
+
 # ------------------- NSF-Storage Deployment ------------------- #
 
 kind: Deployment
@@ -125,16 +140,3 @@ spec:
           nfs:
             server: 192.168.1.50
             path: /media/network
-
----
-# ------------------- NSF-Storage StorageClass ------------------- #
-
-apiVersion: storage.k8s.io/v1
-kind: StorageClass
-metadata:
-  name: nfs-network
-  annotations:
-    storageclass.kubernetes.io/is-default-class: "true"
-provisioner: nfs-provisioner/nfs-network
-parameters:
-  archiveOnDelete: "true"
