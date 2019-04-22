@@ -102,7 +102,7 @@ spec:
               mountPath: /persistentvolumes
           env:
             - name: PROVISIONER_NAME
-              value: nfs-provisioner/nfs-ssd1
+              value: nfs-provisioner/nfs-network
             - name: NFS_SERVER
               value: 192.168.1.50
             - name: NFS_PATH
@@ -132,9 +132,9 @@ spec:
 apiVersion: storage.k8s.io/v1
 kind: StorageClass
 metadata:
-  name: nfs-ssd1
+  name: nfs-network
   annotations:
     storageclass.kubernetes.io/is-default-class: "true"
-provisioner: nfs-provisioner/nfs-ssd1
+provisioner: nfs-provisioner/nfs-network
 parameters:
   archiveOnDelete: "true"
