@@ -49,22 +49,16 @@ data:
     email = "luke.audie@gmail.com"
     storage = "traefik-external-certificates/acme/account"
     acmeLogging = true
-    onHostRule = true
-    #onDemand = true
-    #caServer = "https://acme-staging-v02.api.letsencrypt.org/directory"
     entryPoint = "https"
+    OnHostRule = true
+    #caServer = "https://acme-staging-v02.api.letsencrypt.org/directory"
 
-    #[acme.tlsChallenge]
+    # [acme.httpChallenge]
+    #   entryPoint="http"
 
     [acme.dnsChallenge]
-      provider = "namecheap"
+      provider = "godaddy"
       delayBeforeCheck = 0
-    
-    #[acme.httpChallenge]
-      #entryPoint = "http"
-    
-    #[[acme.domains]]
-      #main = "*.bpmcrowd.com"
 
 ---
 # ------------------- Traefik ServiceAccount ------------------- #
