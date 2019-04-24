@@ -50,15 +50,19 @@ data:
     storage = "traefik-external-certificates/acme/account"
     acmeLogging = true
     entryPoint = "https"
-    OnHostRule = true
+    onHostRule = true
     #caServer = "https://acme-staging-v02.api.letsencrypt.org/directory"
+    
+    [acme.httpChallenge]
+      entryPoint="http"
 
-    # [acme.httpChallenge]
-    #   entryPoint="http"
+    [[acme.domains]]
+      main = "*.goldenpassport.net"
+      sans = ["goldenpassport.net"]
 
     [acme.dnsChallenge]
-      provider = "godaddy"
       delayBeforeCheck = 0
+      provider = "godaddy"
 
 ---
 # ------------------- Traefik ServiceAccount ------------------- #
