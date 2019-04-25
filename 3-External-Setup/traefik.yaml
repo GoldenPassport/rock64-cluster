@@ -64,6 +64,9 @@ data:
     [acme.dnsChallenge]
       delayBeforeCheck = 0
       provider = "godaddy"
+      [godaddy]
+        GODADDY_API_KEY = "api_key-here"
+        GODADDY_API_SECRET = "api_secret-here"
 
 ---
 # ------------------- Traefik ServiceAccount ------------------- #
@@ -253,15 +256,17 @@ spec:
         - --configfile=/config/traefik.toml
         env:
           - name: GODADDY_API_KEY
-            valueFrom:
-              secretKeyRef:
-                key: key
-                name: traefik-external-provider
+            value: dKD9mjoUALrT_7sHz1qAfFZe83Q5f2MbGsm
+            #valueFrom:
+              #secretKeyRef:
+                #key: key
+                #name: traefik-external-provider
           - name: GODADDY_API_SECRET
-            valueFrom:
-              secretKeyRef:
-                key: secret
-                name: traefik-external-provider
+            value: 7sK1dHWLhoLexnfmzXJWcb
+            #valueFrom:
+              #secretKeyRef:
+                #key: secret
+                #name: traefik-external-provider
         livenessProbe:
           httpGet:
             path: /health
