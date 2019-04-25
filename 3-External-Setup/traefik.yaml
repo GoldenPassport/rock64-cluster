@@ -64,9 +64,9 @@ data:
     [acme.dnsChallenge]
       delayBeforeCheck = 0
       provider = "godaddy"
-      [godaddy]
-        GODADDY_API_KEY = "api_key-here"
-        GODADDY_API_SECRET = "api_secret-here"
+      #[godaddy]
+        #GODADDY_API_KEY = "api_key-here"
+        #GODADDY_API_SECRET = "api_secret-here"
 
 ---
 # ------------------- Traefik ServiceAccount ------------------- #
