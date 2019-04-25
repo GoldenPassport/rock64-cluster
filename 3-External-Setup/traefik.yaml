@@ -8,7 +8,7 @@ metadata:
 data:
   traefik.toml: |
     debug = true
-    logLevel = "debug"
+    logLevel = "error"
 
     defaultEntryPoints = ["http", "https"]
 
@@ -149,7 +149,7 @@ metadata:
   name: traefik-ingress-lb-external
   namespace: kube-system
   labels:
-    traffic-type: external
+    traffic-type: internal
 spec:
   rules:
   - host: traefik-ext.bpmcrowd.com
