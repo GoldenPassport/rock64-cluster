@@ -59,7 +59,6 @@ data:
 
     [[acme.domains]]
       main = "*.bpmcrowd.com"
-      sans = ["bpmcrowd.com"]
 
     [acme.dnsChallenge]
       delayBeforeCheck = 0
