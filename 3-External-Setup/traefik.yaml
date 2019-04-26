@@ -254,15 +254,15 @@ spec:
         args:
         - --api
         - --configfile=/config/traefik.toml
-        #env:
-          #- name: GODADDY_API_KEY
-            #value: dKD9mjoUALrT_7sHz1qAfFZe83Q5f2MbGsm
+        env:
+          - name: GODADDY_API_KEY
+            value: dKD9mjoUALrT_7sHz1qAfFZe83Q5f2MbGsm
             #valueFrom:
               #secretKeyRef:
                 #key: key
                 #name: traefik-external-provider
-          #- name: GODADDY_API_SECRET
-            #value: 7sK1dHWLhoLexnfmzXJWcb
+          - name: GODADDY_API_SECRET
+            value: 7sK1dHWLhoLexnfmzXJWcb
             #valueFrom:
               #secretKeyRef:
                 #key: secret
