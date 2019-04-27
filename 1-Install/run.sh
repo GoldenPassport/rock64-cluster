@@ -124,4 +124,4 @@ if ! [ -x "$(command -v helm)" ]; then
   ./get_helm.sh
 fi
 
-apt autoremove
+apt -y autoremove
