@@ -47,8 +47,8 @@ data:
 
     [acme]
     email = "luke.audie@gmail.com"
-    #storage = "traefik-external-certificates/acme/account"
-    storage = "acme.json"
+    storage = "traefik-external-certificates/acme/account"
+    #storage = "acme.json"
     acmeLogging = true
     entryPoint = "https"
     onHostRule = true
@@ -58,7 +58,7 @@ data:
       entryPoint="http"
 
     [[acme.domains]]
-      main = "*.bpmcrowd.com"
+      main = "bpmcrowd.com"
 
     [acme.dnsChallenge]
       delayBeforeCheck = 0

@@ -38,9 +38,10 @@ sleep 60s
 kubectl create secret generic traefik-external-provider -n kube-system --from-literal=key=dKD9mjoUALrT_7sHz1qAfFZe83Q5f2MbGsm --from-literal=secret=7sK1dHWLhoLexnfmzXJWcb
 
 sudo helm init --service-account tiller --tiller-image jessestuart/tiller
+sleep 60s
 # Patch Helm to land on an ARM node because of the used image
 kubectl patch deployment tiller-deploy -n kube-system --patch '{"spec": {"template": {"spec": {"nodeSelector": {"beta.kubernetes.io/arch": "arm64"}}}}}'
-sleep 60s
+sleep 30s
 
 # Consul
 sudo helm del --purge consul-traefik
