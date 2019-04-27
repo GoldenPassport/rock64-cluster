@@ -120,7 +120,7 @@ spec:
             - name: NFS_SERVER
               value: 192.168.1.50
             - name: NFS_PATH
-              value: /media/network
+              value: /media/usb
       affinity:
         podAntiAffinity:
           preferredDuringSchedulingIgnoredDuringExecution:
@@ -138,4 +138,4 @@ spec:
         - name: nfs-client-root
           nfs:
             server: 192.168.1.50
-            path: /media/network
+            path: /media/usb
