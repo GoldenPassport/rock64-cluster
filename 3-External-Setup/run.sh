@@ -52,9 +52,6 @@ sleep 30s
 # Traefik
 #
 
-kctl apply -f traefik.yaml
-sleep 60s
-
 kubectl delete job traefik-kv-store
 
 cat <<EOF | kubectl create -f -
@@ -86,3 +83,6 @@ spec:
         configMap:
           name: traefik-conf-external
 EOF
+
+sleep 60s
+kctl apply -f traefik.yaml
