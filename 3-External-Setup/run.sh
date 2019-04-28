@@ -48,6 +48,7 @@ sleep 5s
 
 # Consul
 sudo helm del --purge consul-traefik
+sleep 15s
 sudo helm install --name consul-traefik stable/consul --set ImageTag=1.4.4 --namespace kube-system
 sleep 30s
 
