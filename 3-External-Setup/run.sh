@@ -120,6 +120,10 @@ data:
     [[acme.domains]]
       main = "bpmcrowd.com"
 
+    [[acme.domains]]
+      main = "*.bpmcrowd.com"
+      sans = ["bpmcrowd.com"]
+
     [acme.dnsChallenge]
       delayBeforeCheck = 0
       provider = "godaddy"
