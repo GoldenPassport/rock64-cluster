@@ -122,7 +122,7 @@ data:
           GODADDY_API_KEY = "dKD9mjoUALrT_7sHz1qAfFZe83Q5f2MbGsm"
           GODADDY_API_SECRET = "7sK1dHWLhoLexnfmzXJWcb"
       [[acme.domains]]
-        main = "*.bpmcrowd.com"
+        main = "bpmcrowd.com"
 EOF
 sleep 30s
 

@@ -184,7 +184,7 @@ metadata:
     traffic-type: internal
 spec:
   rules:
-  - host: traefik-ext.bpmcrowd.com
+  - host: traefik.external.bpmcrowd.com
     http:
       paths:
       - path: /
@@ -206,6 +206,7 @@ spec:
         backend:
           serviceName: consul-traefik-ui
           servicePort: http
+
 ---
 apiVersion: extensions/v1beta1
 kind: Ingress
@@ -216,14 +217,14 @@ metadata:
     traffic-type: external
   annotations:
     traefik.frontend.rule.type: PathPrefix
-    traefik.frontend.redirect.entryPoint: https
-    traefik.frontend.redirect.regex: ^http://(.*)
-    traefik.frontend.redirect.replacement: https://$1
+    #traefik.frontend.redirect.entryPoint: https
+    #traefik.frontend.redirect.regex: ^http://(.*)
+    #traefik.frontend.redirect.replacement: https://$1
     #ingress.kubernetes.io/auth-type: basic
     #ingress.kubernetes.io/auth-secret: ingress-auth
 spec:
   rules:
-  - host: dashboard.bpmcrowd.com
+  - host: dashboard.external.bpmcrowd.com
     http:
       paths:
       - path: /

@@ -1,9 +1,0 @@
-# ------------------- Network StorageClass ------------------- #
-kind: StorageClass
-apiVersion: storage.k8s.io/v1
-metadata:
-  name: network-storage
-  annotations:
-    storageclass.kubernetes.io/is-default-class: "true"
-provisioner: kubernetes.io/no-provisioner
-volumeBindingMode: WaitForFirstConsumer

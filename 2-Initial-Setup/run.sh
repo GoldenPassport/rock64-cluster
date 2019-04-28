@@ -39,5 +39,8 @@ sleep 10s
 kubectl apply -f https://raw.githubusercontent.com/google/metallb/v0.7.3/manifests/metallb.yaml
 kubectl apply -f metallb.yaml
 
+# Traefik
+kctl apply -f traefik.yaml
+
 # Dashboard
 kctl apply -f dashboard.yaml
