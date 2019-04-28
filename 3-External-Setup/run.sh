@@ -34,7 +34,7 @@ sleep 5s
 #sudo helm repo update
 #sudo helm reset
 
-kubectl delete secret traefik-external-provider
+#kubectl delete secret traefik-external-provider
 kubectl create secret generic traefik-external-provider -n kube-system --from-literal=key=dKD9mjoUALrT_7sHz1qAfFZe83Q5f2MbGsm --from-literal=secret=7sK1dHWLhoLexnfmzXJWcb
 
 # Tiller role
@@ -106,27 +106,23 @@ data:
       prefix = "traefik-external"
 
     [acme]
-    email = "luke.audie@gmail.com"
-    storage = "traefik-external-certificates/acme/account"
-    #storage = "acme.json"
-    acmeLogging = true
-    entryPoint = "https"
-    onHostRule = true
-    caServer = "https://acme-staging-v02.api.letsencrypt.org/directory"
-    
-    #[acme.httpChallenge]
-      #entryPoint="http"
-
-    [[acme.domains]]
-      main = "*.bpmcrowd.com"
-      sans = ["bpmcrowd.com"]
-
-    [acme.dnsChallenge]
-      delayBeforeCheck = 0
-      provider = "godaddy"
-      [godaddy]
-        GODADDY_API_KEY = "dKD9mjoUALrT_7sHz1qAfFZe83Q5f2MbGsm"
-        GODADDY_API_SECRET = "7sK1dHWLhoLexnfmzXJWcb"
+      email = "luke.audie@gmail.com"
+      storage = "traefik-external-certificates/acme/account"
+      #storage = "acme.json"
+      acmeLogging = true
+      entryPoint = "https"
+      onHostRule = true
+      caServer = "https://acme-staging-v02.api.letsencrypt.org/directory"
+      #[acme.httpChallenge]
+        #entryPoint="http"
+      [acme.dnsChallenge]
+        delayBeforeCheck = 0
+        provider = "godaddy"
+        [godaddy]
+          GODADDY_API_KEY = "dKD9mjoUALrT_7sHz1qAfFZe83Q5f2MbGsm"
+          GODADDY_API_SECRET = "7sK1dHWLhoLexnfmzXJWcb"
+      [[acme.domains]]
+        main = "*.bpmcrowd.com"
 EOF
 sleep 30s
 
