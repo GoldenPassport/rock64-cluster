@@ -36,7 +36,7 @@ sleep 5s
 
 # Tiller role
 kctl apply -f tiller.yaml
-sleep 60s
+sleep 15s
 
 kubectl create secret generic traefik-external-provider -n kube-system --from-literal=key=dKD9mjoUALrT_7sHz1qAfFZe83Q5f2MbGsm --from-literal=secret=7sK1dHWLhoLexnfmzXJWcb
 
