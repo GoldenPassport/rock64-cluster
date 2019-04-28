@@ -15,6 +15,9 @@ kctl() {
     kubectl --namespace "$NAMESPACE" "$@"
 }
 
+# Remove previous setup
+kubectl delete -f .
+
 #
 # NFS-Storage
 #
@@ -53,8 +56,7 @@ sleep 30s
 #
 
 kubectl delete configmap traefik-conf-external
-kubectl delete job traefik-kv-store
-
+sleep 5s
 cat <<EOF | kubectl create -f -
 apiVersion: v1
 kind: ConfigMap
@@ -122,7 +124,12 @@ data:
       [godaddy]
         GODADDY_API_KEY = "dKD9mjoUALrT_7sHz1qAfFZe83Q5f2MbGsm"
         GODADDY_API_SECRET = "7sK1dHWLhoLexnfmzXJWcb"
----
+EOF
+sleep 30s
+
+kubectl delete job traefik-kv-store
+sleep 5s
+cat <<EOF | kubectl create -f -
 apiVersion: batch/v1
 kind: Job
 metadata:
@@ -151,6 +158,6 @@ spec:
         configMap:
           name: traefik-conf-external
 EOF
-sleep 60s
+sleep 30s
 
 kctl apply -f traefik.yaml
