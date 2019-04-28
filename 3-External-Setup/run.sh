@@ -16,7 +16,7 @@ kctl() {
 }
 
 # Remove previous setup
-kubectl delete -f .
+#kubectl delete -f .
 
 #
 # NFS-Storage
