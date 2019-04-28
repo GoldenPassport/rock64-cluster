@@ -52,37 +52,10 @@ sleep 30s
 # Traefik
 #
 
-kubectl delete job traefik-kv-store
+#kubectl delete job traefik-kv-store
 
-cat <<EOF | kubectl create -f -
-apiVersion: batch/v1
-kind: Job
-metadata:
-  name: traefik-kv-store
-  namespace: kube-system
-spec:
-  backoffLimit: 3
-  activeDeadlineSeconds: 100
-  ttlSecondsAfterFinished: 5
-  template:
-    metadata:
-      name: traefik-kv-store
-    spec:
-      containers:
-      - name: storeconfig
-        image: traefik:v1.7
-        imagePullPolicy: IfNotPresent
-        args: [ "storeconfig", "-c", "/config/traefik.toml" ]
-        volumeMounts:
-        - name: config
-          mountPath: /etc/traefik
-          readOnly: true
-      restartPolicy: Never
-      volumes:
-      - name: config
-        configMap:
-          name: traefik-conf-external
-EOF
+#cat <<EOF | kubectl create -f -
+#EOF
 
-sleep 60s
+#sleep 60s
 kctl apply -f traefik.yaml

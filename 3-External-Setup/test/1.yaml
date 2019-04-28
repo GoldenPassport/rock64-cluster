@@ -36,11 +36,11 @@ spec:
       labels:
         app: traefik-consul
     spec:
-      terminationGracePeriodSeconds: 0
+      terminationGracePeriodSeconds: 60
       containers:
       - name: traefik-consul
         imagePullPolicy: Always
-        image: consul:0.7.5
+        image: consul:1.4.4
         args:
         - "agent"
         - "-server"
