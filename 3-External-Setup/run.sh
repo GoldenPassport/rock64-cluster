@@ -128,7 +128,7 @@ EOF
 sleep 30s
 
 kubectl delete job traefik-kv-store
-sleep 5s
+sleep 30s
 cat <<EOF | kubectl create -f -
 apiVersion: batch/v1
 kind: Job
