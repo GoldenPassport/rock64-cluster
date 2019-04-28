@@ -114,11 +114,8 @@ data:
     onHostRule = true
     caServer = "https://acme-staging-v02.api.letsencrypt.org/directory"
     
-    [acme.httpChallenge]
-      entryPoint="http"
-
-    [[acme.domains]]
-      main = "bpmcrowd.com"
+    #[acme.httpChallenge]
+      #entryPoint="http"
 
     [[acme.domains]]
       main = "*.bpmcrowd.com"
