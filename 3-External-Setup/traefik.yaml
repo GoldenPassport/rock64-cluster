@@ -116,92 +116,6 @@ subjects:
   namespace: kube-system
 
 ---
-# ------------------- Traefik Service ------------------- #
-
-kind: Service
-apiVersion: v1
-metadata:
-  name: traefik-ingress-service-external
-  namespace: kube-system
-  labels:
-    k8s-app: traefik-ingress-lb
-spec:
-  selector:
-    k8s-app: traefik-ingress-lb-external
-  externalTrafficPolicy: Local
-  ports:
-    - protocol: TCP
-      port: 80
-      name: web
-    - protocol: TCP
-      port: 443
-      name: https
-    - protocol: TCP
-      port: 8080
-      name: admin
-  type: LoadBalancer
-  loadBalancerIP: 192.168.1.21
-
----
-# ------------------- Traefik Ingress ------------------- #
-
-apiVersion: extensions/v1beta1
-kind: Ingress
-metadata:
-  name: traefik-ingress-lb-external
-  namespace: kube-system
-  labels:
-    traffic-type: internal
-spec:
-  rules:
-  - host: traefik-ext.bpmcrowd.com
-    http:
-      paths:
-      - path: /
-        backend:
-          serviceName: traefik-ingress-service-external
-          servicePort: admin
----
-apiVersion: extensions/v1beta1
-kind: Ingress
-metadata:
-  name: consul-ui
-  namespace: kube-system
-spec:
-  rules:
-  - host: consul.bpmcrowd.com
-    http:
-      paths:
-      - path: /
-        backend:
-          serviceName: consul-traefik-ui
-          servicePort: http
----
-apiVersion: extensions/v1beta1
-kind: Ingress
-metadata:
-  name: kubernetes-dashboard-external
-  namespace: kube-system
-  labels:
-    traffic-type: external
-  annotations:
-    traefik.frontend.rule.type: PathPrefix
-    traefik.frontend.redirect.entryPoint: https
-    traefik.frontend.redirect.regex: ^http://(.*)
-    traefik.frontend.redirect.replacement: https://$1
-    #ingress.kubernetes.io/auth-type: basic
-    #ingress.kubernetes.io/auth-secret: ingress-auth
-spec:
-  rules:
-  - host: dashboard.bpmcrowd.com
-    http:
-      paths:
-      - path: /
-        backend:
-          serviceName: kubernetes-dashboard
-          servicePort: 80
-
----
 # ------------------- Traefik StatefulSet ------------------- #
 
 apiVersion: apps/v1
@@ -299,3 +213,89 @@ spec:
                   values:
                   - traefik-ingress-lb
               topologyKey: kubernetes.io/hostname
+
+---
+# ------------------- Traefik Service ------------------- #
+
+kind: Service
+apiVersion: v1
+metadata:
+  name: traefik-ingress-service-external
+  namespace: kube-system
+  labels:
+    k8s-app: traefik-ingress-lb
+spec:
+  selector:
+    k8s-app: traefik-ingress-lb-external
+  externalTrafficPolicy: Local
+  ports:
+    - protocol: TCP
+      port: 80
+      name: web
+    - protocol: TCP
+      port: 443
+      name: https
+    - protocol: TCP
+      port: 8080
+      name: admin
+  type: LoadBalancer
+  loadBalancerIP: 192.168.1.21
+
+---
+# ------------------- Traefik Ingress ------------------- #
+
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  name: traefik-ingress-lb-external
+  namespace: kube-system
+  labels:
+    traffic-type: internal
+spec:
+  rules:
+  - host: traefik-ext.bpmcrowd.com
+    http:
+      paths:
+      - path: /
+        backend:
+          serviceName: traefik-ingress-service-external
+          servicePort: admin
+---
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  name: consul-ui
+  namespace: kube-system
+spec:
+  rules:
+  - host: consul.bpmcrowd.com
+    http:
+      paths:
+      - path: /
+        backend:
+          serviceName: consul-traefik-ui
+          servicePort: http
+---
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  name: kubernetes-dashboard-external
+  namespace: kube-system
+  labels:
+    traffic-type: external
+  annotations:
+    traefik.frontend.rule.type: PathPrefix
+    traefik.frontend.redirect.entryPoint: https
+    traefik.frontend.redirect.regex: ^http://(.*)
+    traefik.frontend.redirect.replacement: https://$1
+    #ingress.kubernetes.io/auth-type: basic
+    #ingress.kubernetes.io/auth-secret: ingress-auth
+spec:
+  rules:
+  - host: dashboard.bpmcrowd.com
+    http:
+      paths:
+      - path: /
+        backend:
+          serviceName: kubernetes-dashboard
+          servicePort: 80
