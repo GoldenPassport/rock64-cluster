@@ -1,29 +1,3 @@
-# ------------------- Traefik Service ------------------- #
-
-kind: Service
-apiVersion: v1
-metadata:
-  name: traefik-ingress-service-external
-  namespace: kube-system
-  labels:
-    k8s-app: traefik-ingress-lb
-spec:
-  selector:
-    k8s-app: traefik-ingress-lb-external
-  externalTrafficPolicy: Local
-  ports:
-    - protocol: TCP
-      port: 80
-      name: web
-    - protocol: TCP
-      port: 443
-      name: https
-    - protocol: TCP
-      port: 8080
-      name: admin
-  type: LoadBalancer
-  loadBalancerIP: 192.168.1.21
-
 ---
 # ------------------- Traefik ServiceAccount ------------------- #
 apiVersion: v1
@@ -71,6 +45,33 @@ subjects:
 - kind: ServiceAccount
   name: traefik-ingress-controller-external
   namespace: kube-system
+
+---
+# ------------------- Traefik Service ------------------- #
+
+kind: Service
+apiVersion: v1
+metadata:
+  name: traefik-ingress-service-external
+  namespace: kube-system
+  labels:
+    k8s-app: traefik-ingress-lb
+spec:
+  selector:
+    k8s-app: traefik-ingress-lb-external
+  externalTrafficPolicy: Local
+  ports:
+    - protocol: TCP
+      port: 80
+      name: web
+    - protocol: TCP
+      port: 443
+      name: https
+    - protocol: TCP
+      port: 8080
+      name: admin
+  type: LoadBalancer
+  loadBalancerIP: 192.168.1.21
 
 ---
 # ------------------- Traefik StatefulSet ------------------- #
