@@ -13,7 +13,7 @@ metadata:
   namespace: kube-system
 data:
   traefik.toml: |
-    defaultEntryPoints = ["http","https"]
+    defaultEntryPoints = ["http"]
     debug = false
     logLevel = "ERROR"
 
@@ -24,9 +24,6 @@ data:
       [entryPoints.http]
       address = ":80"
       compress = true
-      [entryPoints.https]
-      address = ":443"
-        [entryPoints.https.tls]
 
     [web]
       address = ":8080"
@@ -178,7 +175,7 @@ metadata:
   namespace: kube-system
 spec:
   rules:
-  - host: traefik.internal.bpmcrowd.com
+  - host: traefik-int.bpmcrowd.com
     http:
       paths:
       - path: /
