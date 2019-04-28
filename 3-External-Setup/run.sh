@@ -41,10 +41,10 @@ sudo helm init --service-account tiller --tiller-image jessestuart/tiller
 sleep 60s
 # Patch Helm to land on an ARM node because of the used image
 kubectl patch deployment tiller-deploy -n kube-system --patch '{"spec": {"template": {"spec": {"nodeSelector": {"beta.kubernetes.io/arch": "arm64"}}}}}'
-sleep 30s
+sleep 5s
 
 # Consul
-helm del --purge consul-traefik
+sudo helm del --purge consul-traefik
 sudo helm install --name consul-traefik stable/consul --set ImageTag=1.4.4 --namespace kube-system
 sleep 30s
 
@@ -52,9 +52,77 @@ sleep 30s
 # Traefik
 #
 
-#kubectl delete job traefik-kv-store
+kubectl delete configmap traefik-conf-external
+kubectl delete job traefik-kv-store
 
 cat <<EOF | kubectl create -f -
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: traefik-conf-external
+  namespace: kube-system
+data:
+  traefik.toml: |
+    debug = true
+    logLevel = "ERROR"
+
+    defaultEntryPoints = ["http", "https"]
+
+    #Config to redirect http to https
+    [entryPoints]
+      [entryPoints.http]
+      address = ":80"
+        [entryPoints.http.redirect]
+        entryPoint = "https"
+      [entryPoints.https]
+      address = ":443"
+        [entryPoints.https.tls]
+
+    [api]
+      [api.statistics]
+        recentErrors = 10
+
+    [kubernetes]
+      # Only create ingresses where the object has traffic-type: external label
+      labelselector = "traffic-type=external"
+
+    [metrics]
+      [metrics.prometheus]
+      buckets=[0.1,0.3,1.2,5.0]
+      entryPoint = "traefik"
+
+    [ping]
+      entryPoint = "http"
+
+    [accessLog]
+
+    [consul]
+      endpoint = "consul-traefik.kube-system.svc:8500"
+      watch = true
+      prefix = "traefik-external"
+
+    [acme]
+    email = "luke.audie@gmail.com"
+    storage = "traefik-external-certificates/acme/account"
+    #storage = "acme.json"
+    acmeLogging = true
+    entryPoint = "https"
+    onHostRule = true
+    caServer = "https://acme-staging-v02.api.letsencrypt.org/directory"
+    
+    [acme.httpChallenge]
+      entryPoint="http"
+
+    [[acme.domains]]
+      main = "bpmcrowd.com"
+
+    [acme.dnsChallenge]
+      delayBeforeCheck = 0
+      provider = "godaddy"
+      [godaddy]
+        GODADDY_API_KEY = "dKD9mjoUALrT_7sHz1qAfFZe83Q5f2MbGsm"
+        GODADDY_API_SECRET = "7sK1dHWLhoLexnfmzXJWcb"
+---
 apiVersion: batch/v1
 kind: Job
 metadata:
@@ -83,6 +151,6 @@ spec:
         configMap:
           name: traefik-conf-external
 EOF
+sleep 60s
 
-#sleep 60s
 kctl apply -f traefik.yaml
