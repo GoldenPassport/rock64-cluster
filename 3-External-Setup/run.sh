@@ -67,10 +67,9 @@ metadata:
   namespace: kube-system
 data:
   traefik.toml: |
+    defaultEntryPoints = ["http", "https"]
     debug = true
     logLevel = "ERROR"
-
-    defaultEntryPoints = ["http", "https"]
 
     #Config to redirect http to https
     [entryPoints]
@@ -108,26 +107,22 @@ data:
     [acme]
       email = "luke.audie@gmail.com"
       storage = "traefik-external-certificates/acme/account"
-      #storage = "acme.json"
       acmeLogging = true
       entryPoint = "https"
       onHostRule = true
-      caServer = "https://acme-staging-v02.api.letsencrypt.org/directory"
+      #caServer = "https://acme-staging-v02.api.letsencrypt.org/directory"
       #[acme.httpChallenge]
         #entryPoint="http"
       [acme.dnsChallenge]
         delayBeforeCheck = 0
         provider = "godaddy"
-        [godaddy]
-          GODADDY_API_KEY = "dKD9mjoUALrT_7sHz1qAfFZe83Q5f2MbGsm"
-          GODADDY_API_SECRET = "7sK1dHWLhoLexnfmzXJWcb"
       [[acme.domains]]
-        main = "bpmcrowd.com"
+        main = "*.bpmcrowd.com"
 EOF
-sleep 30s
+sleep 15s
 
 kubectl delete job traefik-kv-store
-sleep 30s
+sleep 15s
 cat <<EOF | kubectl create -f -
 apiVersion: batch/v1
 kind: Job
@@ -157,6 +152,6 @@ spec:
         configMap:
           name: traefik-conf-external
 EOF
-sleep 30s
+sleep 60s
 
 kctl apply -f ./traefik.yaml
