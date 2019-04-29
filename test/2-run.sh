@@ -36,7 +36,9 @@ sleep 10s
 #
 
 # MetalLB
-kubectl apply -f https://raw.githubusercontent.com/google/metallb/v0.7.3/manifests/metallb.yaml
-kubectl apply -f metallb.yaml
+# kubectl apply -f https://raw.githubusercontent.com/google/metallb/v0.7.3/manifests/metallb.yaml
+# kubectl apply -f metallb.yaml
 
+sudo helm init
+sleep 30s
 sudo helm install stable/traefik --set dashboard.enabled=true,dashboard.domain=dashboard.localhost
