@@ -41,7 +41,7 @@ kubectl create secret generic traefik-external-provider -n kube-system --from-li
 kctl apply -f tiller.yaml
 sleep 15s
 
-helm init --service-account tiller --tiller-image jessestuart/tiller
+sudo helm init --service-account tiller --tiller-image jessestuart/tiller
 sleep 60s
 # Patch Helm to land on an ARM node because of the used image
 kubectl patch deployment tiller-deploy -n kube-system --patch '{"spec": {"template": {"spec": {"nodeSelector": {"beta.kubernetes.io/arch": "arm64"}}}}}'
@@ -56,6 +56,9 @@ sleep 30s
 #
 # Traefik
 #
+kctl delete configmap traefik-conf-external
+sleep 15s
+
 cat <<EOF | kubectl create -f -
 apiVersion: v1
 kind: ConfigMap
@@ -121,6 +124,9 @@ data:
         main = "*.bpmcrowd.com"
 EOF
 sleep 30s
+
+kctl delete job traefik-kv-store
+sleep 15s
 
 cat <<EOF | kubectl create -f -
 apiVersion: batch/v1
