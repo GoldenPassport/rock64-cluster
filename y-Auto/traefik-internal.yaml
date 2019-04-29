@@ -14,6 +14,7 @@ metadata:
 data:
   traefik.toml: |
     defaultEntryPoints = ["http"]
+    sendAnonymousUsage = false
     debug = true
     logLevel = "ERROR"
 

@@ -67,10 +67,10 @@ metadata:
   namespace: kube-system
 data:
   traefik.toml: |
+    defaultEntryPoints = ["http", "https"]
+    sendAnonymousUsage = false
     debug = true
     logLevel = "ERROR"
-
-    defaultEntryPoints = ["http", "https"]
 
     #Config to redirect http to https
     [entryPoints]
