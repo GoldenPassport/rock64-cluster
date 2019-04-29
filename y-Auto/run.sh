@@ -1,4 +1,4 @@
-sudo bahs teardown-run.sh
+sudo bash teardown-run.sh
 sleep 15s
 
 sudo bash 1-run.sh
