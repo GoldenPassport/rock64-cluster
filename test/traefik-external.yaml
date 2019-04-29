@@ -1,0 +1,233 @@
+---
+# ------------------- Traefik ServiceAccount ------------------- #
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: traefik-ingress-controller-external
+  namespace: kube-system
+
+---
+# ------------------- Traefik Role & Role Binding ------------------- #
+
+kind: ClusterRole
+apiVersion: rbac.authorization.k8s.io/v1beta1
+metadata:
+  name: traefik-ingress-controller-external
+rules:
+  - apiGroups:
+      - ""
+    resources:
+      - services
+      - endpoints
+      - secrets
+    verbs:
+      - get
+      - list
+      - watch
+  - apiGroups:
+      - extensions
+    resources:
+      - ingresses
+    verbs:
+      - get
+      - list
+      - watch
+---
+kind: ClusterRoleBinding
+apiVersion: rbac.authorization.k8s.io/v1beta1
+metadata:
+  name: traefik-ingress-controller-external
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: traefik-ingress-controller-external
+subjects:
+- kind: ServiceAccount
+  name: traefik-ingress-controller-external
+  namespace: kube-system
+
+---
+# ------------------- Traefik Service ------------------- #
+
+kind: Service
+apiVersion: v1
+metadata:
+  name: traefik-ingress-service-external
+  namespace: kube-system
+  labels:
+    k8s-app: traefik-ingress-lb
+spec:
+  selector:
+    k8s-app: traefik-ingress-lb-external
+  externalTrafficPolicy: Local
+  ports:
+    - protocol: TCP
+      port: 80
+      name: web
+    - protocol: TCP
+      port: 443
+      name: https
+    - protocol: TCP
+      port: 8080
+      name: admin
+  type: LoadBalancer
+  loadBalancerIP: 192.168.1.21
+
+---
+# ------------------- Traefik StatefulSet ------------------- #
+
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: traefik-ingress-controller-external
+  namespace: kube-system
+  labels:
+    k8s-app: traefik-ingress-lb-external
+spec:
+  serviceName: traefik-ingress-lb-external
+  replicas: 2
+  selector:
+    matchLabels:
+      k8s-app: traefik-ingress-lb-external
+  template:
+    metadata:
+      labels:
+        k8s-app: traefik-ingress-lb-external
+        name: traefik-ingress-lb-external
+    spec:
+      serviceAccountName: traefik-ingress-controller-external
+      terminationGracePeriodSeconds: 60
+      # Remove the initContainer in case of a *big operation* to avoid inconsistencies when
+      # starting multiple pods in parallel. Might be a case a pod starts with partial config
+      # because another pod is overwriting the config in KV.
+      #initContainers:
+      #- name: storeconfig
+      #  image: traefik:v1.6
+      #  imagePullPolicy: IfNotPresent
+      #  args:
+      #  - storeconfig
+      #  - -c
+      #  - /config/traefik.toml
+      #  volumeMounts:
+      #  - name: config
+      #    mountPath: /etc/traefik
+      #    readOnly: true
+      containers:
+      - image: traefik:v1.7.9
+        name: traefik-ingress-lb
+        ports:
+         - name: http
+           containerPort: 80
+         - name: https
+           containerPort: 443
+         - name: admin
+           containerPort: 8080
+        args:
+        - --api
+        - --configfile=/config/traefik.toml
+        env:
+          - name: GODADDY_API_KEY
+            value: dKD9mjoUALrT_7sHz1qAfFZe83Q5f2MbGsm
+            #valueFrom:
+              #secretKeyRef:
+                #key: key
+                #name: traefik-external-provider
+          - name: GODADDY_API_SECRET
+            value: 7sK1dHWLhoLexnfmzXJWcb
+            #valueFrom:
+              #secretKeyRef:
+                #key: secret
+                #name: traefik-external-provider
+        livenessProbe:
+          httpGet:
+            path: /health
+            port: 8080
+          initialDelaySeconds: 180
+          periodSeconds: 3
+          timeoutSeconds: 1
+        resources:
+          requests:
+            cpu: 100m
+            memory: 64Mi
+          limits:
+            cpu: 200m
+            memory: 256Mi
+        volumeMounts:
+        - mountPath: /config
+          name: config
+      volumes:
+      - name: config
+        configMap:
+          name: traefik-conf-external
+      affinity:
+        podAntiAffinity:
+          preferredDuringSchedulingIgnoredDuringExecution:
+          - weight: 100
+            podAffinityTerm:
+              labelSelector:
+                matchExpressions:
+                - key: k8s-app
+                  operator: In
+                  values:
+                  - traefik-ingress-lb
+              topologyKey: kubernetes.io/hostname
+
+---
+# ------------------- Traefik Ingress ------------------- #
+
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  name: traefik-ingress-lb-external
+  namespace: kube-system
+  labels:
+    traffic-type: internal
+spec:
+  rules:
+  - host: traefik-ext.bpmcrowd.com
+    http:
+      paths:
+      - path: /
+        backend:
+          serviceName: traefik-ingress-service-external
+          servicePort: admin
+---
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  name: consul-ui
+  namespace: kube-system
+spec:
+  rules:
+  - host: consul.bpmcrowd.com
+    http:
+      paths:
+      - path: /
+        backend:
+          serviceName: consul-traefik-ui
+          servicePort: http
+
+---
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  name: kubernetes-dashboard-external
+  namespace: kube-system
+  labels:
+    traffic-type: external
+  annotations:
+    traefik.frontend.rule.type: PathPrefix
+    #traefik.frontend.redirect.entryPoint: https
+    #traefik.frontend.redirect.regex: ^http://(.*)
+    #traefik.frontend.redirect.replacement: https://$1
+    #ingress.kubernetes.io/auth-type: basic
+    #ingress.kubernetes.io/auth-secret: ingress-auth
+spec:
+  rules:
+  - host: dashboard-ext.bpmcrowd.com
+    http:
+      paths:
+      - path: /
+        backend:
+          serviceName: kubernetes-dashboard
+          servicePort: 80
