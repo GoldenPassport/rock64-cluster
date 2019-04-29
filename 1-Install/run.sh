@@ -18,7 +18,7 @@ apt update
 apt -y upgrade
 
 # Reset ip tables
-iptables -F && iptables -t nat -F && iptables -t mangle -F && iptables -X
+#iptables -F && iptables -t nat -F && iptables -t mangle -F && iptables -X
 
 # Disable swap
 sudo swapoff -a 
