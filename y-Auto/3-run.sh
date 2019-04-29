@@ -107,7 +107,7 @@ data:
 
     [acme]
       email = "luke.audie@gmail.com"
-      storage = "traefik-external-certificates/acme/account"
+      storage = "traefik/acme/account"
       acmeLogging = true
       entryPoint = "https"
       onHostRule = true
