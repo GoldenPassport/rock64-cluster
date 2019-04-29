@@ -113,7 +113,7 @@ spec:
       #    mountPath: /etc/traefik
       #    readOnly: true
       containers:
-      - image: traefik:v1.7.11
+      - image: traefik:v2.0.0-alpha4-alpine
         name: traefik-ingress-lb
         ports:
          - name: http
@@ -184,7 +184,7 @@ metadata:
     traffic-type: internal
 spec:
   rules:
-  - host: traefik.external.bpmcrowd.com
+  - host: traefik-ext.bpmcrowd.com
     http:
       paths:
       - path: /
@@ -224,7 +224,7 @@ metadata:
     #ingress.kubernetes.io/auth-secret: ingress-auth
 spec:
   rules:
-  - host: dashboard.external.bpmcrowd.com
+  - host: dashboard-ext.bpmcrowd.com
     http:
       paths:
       - path: /

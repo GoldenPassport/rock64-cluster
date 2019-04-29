@@ -23,7 +23,7 @@ kctl() {
 #
 
 #kubectl apply -f network-storage.yaml
-kubectl apply -f nfs-storage.yaml
+kubectl apply -f ./nfs-storage.yaml
 ##kubectl patch storageclass nfs-network -p '{"metadata": {"annotations":{"storageclass.kubernetes.io/is-default-class":"true"}}}'
 kubectl patch deployment nfs-client-provisioner -n nfs-storage --patch '{"spec": {"template": {"spec": {"nodeSelector": {"beta.kubernetes.io/arch": "arm64"}}}}}'
 sleep 5s
@@ -34,14 +34,14 @@ sleep 5s
 #sudo helm repo update
 #sudo helm reset
 
-#kubectl delete secret traefik-external-provider
+kubectl delete secret traefik-external-provider -n kube-system
 kubectl create secret generic traefik-external-provider -n kube-system --from-literal=key=dKD9mjoUALrT_7sHz1qAfFZe83Q5f2MbGsm --from-literal=secret=7sK1dHWLhoLexnfmzXJWcb
 
 # Tiller role
 kctl apply -f tiller.yaml
 sleep 15s
 
-helm init --service-account tiller --tiller-image jessestuart/tiller
+sudo helm init --service-account tiller --tiller-image jessestuart/tiller
 sleep 60s
 # Patch Helm to land on an ARM node because of the used image
 kubectl patch deployment tiller-deploy -n kube-system --patch '{"spec": {"template": {"spec": {"nodeSelector": {"beta.kubernetes.io/arch": "arm64"}}}}}'
@@ -57,7 +57,7 @@ sleep 30s
 # Traefik
 #
 
-kubectl delete configmap traefik-conf-external
+kubectl delete configmap traefik-conf-external -n kube-system
 sleep 5s
 cat <<EOF | kubectl create -f -
 apiVersion: v1
@@ -159,4 +159,4 @@ spec:
 EOF
 sleep 30s
 
-kctl apply -f traefik.yaml
+kctl apply -f ./traefik.yaml
