@@ -102,7 +102,7 @@ spec:
       serviceAccountName: traefik-ingress-controller
       terminationGracePeriodSeconds: 60
       containers:
-      - image: traefik:v2.0.0-alpha4-alpine
+      - image: traefik:v1.7.9
         name: traefik-ingress-lb
         volumeMounts:
         - mountPath: /config

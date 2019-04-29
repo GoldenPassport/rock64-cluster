@@ -113,7 +113,7 @@ spec:
       #    mountPath: /etc/traefik
       #    readOnly: true
       containers:
-      - image: traefik:v2.0.0-alpha4-alpine
+      - image: traefik:v1.7.9
         name: traefik-ingress-lb
         ports:
          - name: http
