@@ -1,5 +1,15 @@
 #!/bin/bash
-sudo bash z-Teardown/run.sh
-sudo bash 1-Install/run.sh
-sudo bash 2-Initial-Setup/run.sh
-sudo bash 3-External-Setup/run.sh
+sudo helm del --purge consul-traefik
+
+kubectl drain rock1 --delete-local-data --force --ignore-daemonsets
+kubectl delete node rock1
+kubectl drain rock2 --delete-local-data --force --ignore-daemonsets
+kubectl delete node rock2
+kubectl drain rock2 --delete-local-data --force --ignore-daemonsets
+kubectl delete node rock2
+kubectl drain rock3 --delete-local-data --force --ignore-daemonsets
+kubectl delete node rock3
+kubectl drain rock4 --delete-local-data --force --ignore-daemonsets
+kubectl delete node rock4
+
+sudo kubeadm reset -f
