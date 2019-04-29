@@ -57,7 +57,6 @@ sleep 30s
 # Traefik
 #
 
-kubectl delete configmap traefik-conf-external -n kube-system
 sleep 5s
 cat <<EOF | kubectl create -f -
 apiVersion: v1
