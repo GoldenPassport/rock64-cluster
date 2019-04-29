@@ -70,6 +70,7 @@ data:
     defaultEntryPoints = ["http", "https"]
     debug = true
     logLevel = "ERROR"
+    sendAnonymousUsage = false
 
     #Config to redirect http to https
     [entryPoints]
@@ -139,7 +140,7 @@ spec:
     spec:
       containers:
       - name: storeconfig
-        image: traefik:v1.7.11
+        image: traefik:v1.7.8
         imagePullPolicy: IfNotPresent
         args: [ "storeconfig", "-c", "/config/traefik.toml" ]
         volumeMounts:
