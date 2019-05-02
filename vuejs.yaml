@@ -13,8 +13,8 @@ spec:
         app: vuejs
     spec:
       containers:
-      - name: vuejs
-        image: vuejs-cookbook/dockerize-vuejs-app:latest
+      - name: nuxt-test
+        image: chluke/nuxt-test:latest
 ---
 apiVersion: v1
 kind: Service
