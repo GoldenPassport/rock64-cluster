@@ -176,6 +176,8 @@ kind: Ingress
 metadata:
   name: traefik-ingress-lb
   namespace: kube-system
+  labels:
+    traffic-type: internal
 spec:
   rules:
   - host: traefik-int.bpmcrowd.com
