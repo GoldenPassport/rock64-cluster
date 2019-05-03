@@ -197,6 +197,8 @@ kind: Ingress
 metadata:
   name: consul-ui
   namespace: kube-system
+  labels:
+    traffic-type: internal
 spec:
   rules:
   - host: consul.bpmcrowd.com
@@ -217,9 +219,9 @@ metadata:
     traffic-type: external
   annotations:
     traefik.frontend.rule.type: PathPrefix
-    #traefik.frontend.redirect.entryPoint: https
-    #traefik.frontend.redirect.regex: ^http://(.*)
-    #traefik.frontend.redirect.replacement: https://$1
+    traefik.frontend.redirect.entryPoint: https
+    traefik.frontend.redirect.regex: ^http://(.*)
+    traefik.frontend.redirect.replacement: https://$1
     #ingress.kubernetes.io/auth-type: basic
     #ingress.kubernetes.io/auth-secret: ingress-auth
 spec:
