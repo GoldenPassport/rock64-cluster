@@ -18,49 +18,52 @@ apt update
 apt -y upgrade
 
 # Reset ip tables
-#iptables -F && iptables -t nat -F && iptables -t mangle -F && iptables -X
+sudo iptables -F && iptables -t nat -F && iptables -t mangle -F && iptables -X
 
 # Disable swap
 sudo swapoff -a 
 sudo sed -i '/ swap / s/^\(.*\)$/#\1/g' /etc/fstab
 systemctl disable armbian-zram-config.service
 
-#
-# Install Docker CE
-#
-
-## Set up the repository:
 ### Install packages to allow apt to use a repository over HTTPS
 sudo apt-get update
 sudo apt-get install -y apt-transport-https ca-certificates curl software-properties-common
 
+#
+# Install Docker
+#
+sudo apt install -y docker.io
+sudo apt-get install -y docker-compose 
+
+## Set up the repository:
+
 ### Add Docker’s official GPG key
-curl -fsSL https://download.docker.com/linux/ubuntu/gpg | apt-key add -
+#curl -fsSL https://download.docker.com/linux/ubuntu/gpg | apt-key add -
 
 ### Add Docker apt repository.
-sudo add-apt-repository \
-   "deb [arch=arm64] https://download.docker.com/linux/ubuntu \
-   $(lsb_release -cs) \
-   stable"
+#sudo add-apt-repository \
+   #"deb [arch=arm64] https://download.docker.com/linux/ubuntu \
+   #$(lsb_release -cs) \
+   #stable"
 
-apt-get update -y
+#apt-get update -y
 
-## Install Docker CE.
-sudo apt-get install -y docker-ce docker-compose 
+## Install Docker CE
+#sudo apt-get install -y docker-ce docker-compose 
 
 # Setup daemon.
-cat > /etc/docker/daemon.json <<EOF
-{
-  "exec-opts": ["native.cgroupdriver=systemd"],
-  "log-driver": "json-file",
-  "log-opts": {
-    "max-size": "100m"
-  },
-  "storage-driver": "overlay2"
-}
-EOF
+#cat > /etc/docker/daemon.json <<EOF
+##{
+  #"exec-opts": ["native.cgroupdriver=systemd"],
+  #"log-driver": "json-file",
+  #"log-opts": {
+    #"max-size": "100m"
+  #},
+  #"storage-driver": "overlay2"
+##}
+#EOF
 
-mkdir -p /etc/systemd/system/docker.service.d
+#mkdir -p /etc/systemd/system/docker.service.d
 
 # Restart docker.
 systemctl daemon-reload
@@ -104,7 +107,7 @@ cat <<EOF >/etc/apt/sources.list.d/kubernetes.list
 deb http://apt.kubernetes.io/ kubernetes-xenial main
 EOF
 
-apt-get install -y kubelet kubeadm kubectl
+sudo apt-get install -y kubelet kubeadm kubectl
 # apt-mark hold kubelet kubeadm kubectl
 
 # Init Kubernetes
@@ -117,7 +120,7 @@ sleep 10s
 # Post Install Setup
 #
 
-sysctl net.bridge.bridge-nf-call-iptables=1
+sudo sysctl net.bridge.bridge-nf-call-iptables=1
 
 # Install helm
 if ! [ -x "$(command -v helm)" ]; then
@@ -128,4 +131,4 @@ if ! [ -x "$(command -v helm)" ]; then
   ./get_helm.sh
 fi
 
-apt -y autoremove
+sudo apt -y autoremove

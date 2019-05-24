@@ -41,8 +41,8 @@ kubectl apply -f metallb.yaml
 
 # Traefik
 kctl apply -f traefik-internal.yaml
-# kubectl apply -f --namespace="kube-system" traefik-internal.yaml
+# kubectl apply -f traefik-internal.yaml --namespace="kube-system"
 
 # Dashboard
 kctl apply -f dashboard.yaml
-# kubectl apply -f --namespace="kube-system" dashboard.yaml
+# kubectl apply -f dashboard.yaml --namespace="kube-system"
