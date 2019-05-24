@@ -126,14 +126,14 @@ spec:
         - --api
         - --configfile=/config/traefik.toml
         env:
-          - name: GODADDY_API_KEY
-            value: dKD9mjoUALrT_7sHz1qAfFZe83Q5f2MbGsm
+          - name: NAMECHEAP_API_USER
+            value: lukepa
             #valueFrom:
               #secretKeyRef:
                 #key: key
                 #name: traefik-external-provider
-          - name: GODADDY_API_SECRET
-            value: 7sK1dHWLhoLexnfmzXJWcb
+          - name: NAMECHEAP_API_KEY
+            value: 87cf40f983264ae698c0499023d354c1
             #valueFrom:
               #secretKeyRef:
                 #key: secret

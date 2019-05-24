@@ -116,10 +116,10 @@ data:
         #entryPoint="http"
       [acme.dnsChallenge]
         delayBeforeCheck = 0
-        provider = "godaddy"
-        [godaddy]
-          GODADDY_API_KEY = "dKD9mjoUALrT_7sHz1qAfFZe83Q5f2MbGsm"
-          GODADDY_API_SECRET = "7sK1dHWLhoLexnfmzXJWcb"
+        provider = "namecheap"
+        [namecheap]
+          NAMECHEAP_API_USER = "lukepa"
+          NAMECHEAP_API_KEY = "87cf40f983264ae698c0499023d354c1"
       [[acme.domains]]
         main = "*.goldenpassport.net"
 EOF
