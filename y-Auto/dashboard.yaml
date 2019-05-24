@@ -172,7 +172,7 @@ metadata:
     traffic-type: internal
 spec:
   rules:
-  - host: dashboard-int.bpmcrowd.com
+  - host: dashboard-int.goldenpassport.net
     http:
       paths:
       - path: /

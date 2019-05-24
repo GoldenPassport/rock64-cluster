@@ -183,7 +183,7 @@ metadata:
     traffic-type: internal
 spec:
   rules:
-  - host: traefik-int.bpmcrowd.com
+  - host: traefik-int.goldenpassport.net
     http:
       paths:
       - path: /

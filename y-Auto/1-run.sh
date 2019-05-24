@@ -31,8 +31,8 @@ systemctl disable armbian-zram-config.service
 
 ## Set up the repository:
 ### Install packages to allow apt to use a repository over HTTPS
-apt-get update
-apt-get install -y apt-transport-https ca-certificates curl software-properties-common
+sudo apt-get update
+sudo apt-get install -y apt-transport-https ca-certificates curl software-properties-common
 
 ### Add Docker’s official GPG key
 curl -fsSL https://download.docker.com/linux/ubuntu/gpg | apt-key add -
@@ -43,8 +43,10 @@ sudo add-apt-repository \
    $(lsb_release -cs) \
    stable"
 
+apt-get update -y
+
 ## Install Docker CE.
-apt-get install -y docker-ce docker-compose 
+sudo apt-get install -y docker-ce docker-compose 
 
 # Setup daemon.
 cat > /etc/docker/daemon.json <<EOF
@@ -62,7 +64,13 @@ mkdir -p /etc/systemd/system/docker.service.d
 
 # Restart docker.
 systemctl daemon-reload
+systemctl start docker
+systemctl enable docker
 systemctl restart docker
+
+# Add User to Docker Group
+usermod -aG docker $USER
+usermod -aG docker rock
 
 #
 # Install Kubernetes
@@ -98,10 +106,6 @@ EOF
 
 apt-get install -y kubelet kubeadm kubectl
 # apt-mark hold kubelet kubeadm kubectl
-
-# Add User to Docker Group
-usermod -aG docker $USER
-usermod -aG docker rock
 
 # Init Kubernetes
 kubeadm config images pull
