@@ -111,9 +111,9 @@ data:
       acmeLogging = true
       entryPoint = "https"
       onHostRule = true
-      #caServer = "https://acme-staging-v02.api.letsencrypt.org/directory"
-      #[acme.httpChallenge]
-        #entryPoint="http"
+      caServer = "https://acme-staging-v02.api.letsencrypt.org/directory"
+      [acme.httpChallenge]
+        entryPoint="http"
       [acme.dnsChallenge]
         delayBeforeCheck = 0
         provider = "namecheap"
