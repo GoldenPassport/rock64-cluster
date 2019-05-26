@@ -15,7 +15,7 @@ spec:
         k8s-app: hellow-world
     spec:
       containers:
-        - image: hello-world
+        - image: arm64v8/nginx
           name: hellow-world
           ports:
             - containerPort: 80
