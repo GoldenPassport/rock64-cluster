@@ -78,7 +78,6 @@ data:
     debug = true
     logLevel = "ERROR"
 
-    #Config to redirect http to https
     [entryPoints]
       [entryPoints.http]
       address = ":80"
@@ -87,6 +86,7 @@ data:
       [entryPoints.https]
       address = ":443"
         [entryPoints.https.tls]
+      compress = true
 
     [api]
       [api.statistics]
