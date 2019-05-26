@@ -18,8 +18,10 @@ spec:
         - image: arm64v8/nginx
           name: hellow-world
           ports:
-            - containerPort: 80
-              name: http
+            - name: http
+              containerPort: 80
+            - name: https
+              containerPort: 443
 ---
 apiVersion: v1
 kind: Service
@@ -31,8 +33,12 @@ spec:
   selector:
     k8s-app: hellow-world
   ports:
-  - port: 80
-    targetPort: 80
+    - protocol: TCP
+      port: 80
+      name: http
+    - protocol: TCP
+      port: 443
+      name: https
 
 ---
 apiVersion: extensions/v1beta1
@@ -55,4 +61,4 @@ spec:
       - path: /
         backend:
           serviceName: hellow-world-service
-          servicePort: 80
+          servicePort: http
