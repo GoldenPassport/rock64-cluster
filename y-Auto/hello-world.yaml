@@ -5,32 +5,35 @@ metadata:
   labels:
     app: hellow-world
 spec:
-  replicas: 3
+  replicas: 1
   selector:
     matchLabels:
-      app: hellow-world
+      k8s-app: hellow-world
   template:
     metadata:
       labels:
-        app: hellow-world
+        k8s-app: hellow-world
     spec:
       containers:
         - image: hello-world
           name: hellow-world
           ports:
-            - containerPort: 8080
+            - containerPort: 80
               name: http
 ---
 apiVersion: v1
 kind: Service
 metadata:
   name: hellow-world-service
+  labels:
+    k8s-app: hellow-world-service
 spec:
   selector:
-    app: hellow-world
+    k8s-app: hellow-world
   ports:
   - port: 80
-    targetPort: 8080
+    targetPort: 80
+
 ---
 apiVersion: extensions/v1beta1
 kind: Ingress
