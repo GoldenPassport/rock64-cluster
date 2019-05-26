@@ -1,3 +1,9 @@
+#!/usr/bin/env bash
+
+echo "####################################"
+echo "### Requires sudo                ###"
+echo "####################################"
+
 sudo bash teardown-run.sh
 sleep 30s
 

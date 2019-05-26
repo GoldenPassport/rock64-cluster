@@ -1,4 +1,8 @@
 #!/usr/bin/env bash
+# 2-run.sh
+#
+# Installs Flannel, MetalLB and (Kube) Dashboards
+#
 
 if [ -z "${KUBECONFIG}" ]; then
     export KUBECONFIG=~/.kube/config
@@ -15,33 +19,17 @@ kctl() {
     kubectl --namespace "$NAMESPACE" "$@"
 }
 
-#
 # Prep
-#
-
-mkdir -p $HOME/.kube
-sudo cp /etc/kubernetes/admin.conf $HOME/.kube/config
-sudo chown $(id -u):$(id -g) $HOME/.kube/config
-sleep 5s
-
 kubectl taint nodes --all node-role.kubernetes.io/master-
 sleep 10s
 
-# Install Flannel
+# Flannel
 kubectl apply -f https://raw.githubusercontent.com/coreos/flannel/a70459be0084506e4ec919aa1c114638878db11b/Documentation/kube-flannel.yml
 sleep 10s
-
-#
-# Setup
-#
 
 # MetalLB
 kubectl apply -f https://raw.githubusercontent.com/google/metallb/v0.7.3/manifests/metallb.yaml
 kubectl apply -f metallb.yaml
-
-# Traefik
-kctl apply -f traefik-internal.yaml
-# kubectl apply -f traefik-internal.yaml --namespace="kube-system"
 
 # Dashboard
 kctl apply -f dashboard.yaml

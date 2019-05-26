@@ -164,12 +164,12 @@ spec:
 apiVersion: extensions/v1beta1
 kind: Ingress
 metadata:
-  name: kubernetes-dashboard
+  name: kubernetes-dashboard-internal
   namespace: kube-system
-  annotations:
-    traefik.frontend.rule.type: PathPrefix
   labels:
     traffic-type: internal
+  annotations:
+    traefik.frontend.rule.type: PathPrefix
 spec:
   rules:
   - host: dashboard-int.goldenpassport.net

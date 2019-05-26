@@ -1,4 +1,8 @@
 #!/usr/bin/env bash
+# 3-run.sh
+#
+# Installs Storage Class and Traefik
+#
 
 if [ -z "${KUBECONFIG}" ]; then
     export KUBECONFIG=~/.kube/config
@@ -53,9 +57,11 @@ sleep 15s
 sudo helm install --name consul-traefik stable/consul --set ImageTag=1.4.4 --namespace kube-system
 sleep 30s
 
-#
-# Traefik
-#
+# Traefik - Internal
+kctl apply -f traefik-internal.yaml
+# kubectl apply -f traefik-internal.yaml --namespace="kube-system"
+
+# Traefik - External
 kctl delete configmap traefik-conf-external
 sleep 15s
 

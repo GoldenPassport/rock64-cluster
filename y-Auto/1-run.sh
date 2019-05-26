@@ -1,15 +1,8 @@
 #!/bin/bash
-
-echo "####################################"
-echo "### Need to be logged in as root ###"
-echo "####################################"
-
-echo "Container Linux installation script"
-echo "This will install:"
-echo " - Docker Community Edition"
-echo " - Docker Compose"
-echo " - Kubernetes: kubeadm, kubelet and kubectl"
-echo ""
+# 1-run.sh
+#
+# Prepares system and installs: Docker, Kubernetes & Helm
+#
 
 set -xeo pipefail
 
