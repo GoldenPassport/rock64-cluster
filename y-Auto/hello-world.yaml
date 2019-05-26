@@ -46,7 +46,8 @@ metadata:
     traefik.frontend.redirect.replacement: https://$1
 spec:
   rules:
-  - http:
+  - host: helloworld.goldenpassport.net
+    http:
       paths:
       - backend:
           serviceName: hellow-world-service
