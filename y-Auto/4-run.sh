@@ -3,6 +3,7 @@
 
 # NodeJs example app
 
-kubectl create namespace production
-kubectl create namespace staging
+#kubectl create namespace production
+#kubectl create namespace staging
+kubectl apply -f hello-world.yaml
 
