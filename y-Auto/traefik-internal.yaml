@@ -41,8 +41,6 @@ data:
 
     [accessLog]
 
-    [web]
-
 ---
 # ------------------- Traefik ServiceAccount ------------------- #
 
