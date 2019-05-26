@@ -95,6 +95,7 @@ data:
     [kubernetes]
       # Only create ingresses where the object has traffic-type: external label
       labelselector = "traffic-type=external"
+      ingressClass = "traefik-external"
 
     [metrics]
       [metrics.prometheus]
