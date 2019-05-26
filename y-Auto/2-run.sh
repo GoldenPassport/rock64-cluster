@@ -19,11 +19,11 @@ kctl() {
     kubectl --namespace "$NAMESPACE" "$@"
 }
 
+# Prep
 mkdir -p $HOME/.kube
 sudo cp /etc/kubernetes/admin.conf $HOME/.kube/config
 sudo chown $(id -u):$(id -g) $HOME/.kube/config
 
-# Prep
 kubectl taint nodes --all node-role.kubernetes.io/master-
 sleep 10s
 
