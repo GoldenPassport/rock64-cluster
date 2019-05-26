@@ -52,6 +52,7 @@ spec:
   - host: helloworld.goldenpassport.net
     http:
       paths:
-      - backend:
+      - path: /
+        backend:
           serviceName: hellow-world-service
           servicePort: 80
