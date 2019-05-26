@@ -8,11 +8,11 @@ spec:
   replicas: 1
   selector:
     matchLabels:
-      k8s-app: hellow-world
+      app: hellow-world
   template:
     metadata:
       labels:
-        k8s-app: hellow-world
+        app: hellow-world
     spec:
       containers:
         - image: arm64v8/nginx
@@ -28,10 +28,10 @@ kind: Service
 metadata:
   name: hellow-world-service
   labels:
-    k8s-app: hellow-world-service
+    app: hellow-world-service
 spec:
   selector:
-    k8s-app: hellow-world
+    app: hellow-world
   ports:
     - protocol: TCP
       port: 80

@@ -49,8 +49,8 @@ subjects:
 ---
 # ------------------- Traefik StatefulSet ------------------- #
 
-apiVersion: apps/v1
 kind: StatefulSet
+apiVersion: apps/v1
 metadata:
   name: traefik-ingress-controller-external
   namespace: kube-system
@@ -97,6 +97,7 @@ spec:
            containerPort: 8080
         args:
         - --api
+        - --kubernetes
         - --configfile=/config/traefik.toml
         env:
           - name: NAMECHEAP_API_USER
@@ -197,6 +198,8 @@ kind: Ingress
 metadata:
   name: consul-ui
   namespace: kube-system
+  labels:
+    traffic-type: external
 spec:
   rules:
   - host: consul.goldenpassport.net
