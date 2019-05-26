@@ -12,9 +12,11 @@ sleep 30s
 sudo bash 3-run.sh
 sleep 30s
 
-echo "####################################"
-echo "### Enter below as a regular user###"
-echo "####################################"
+echo ""
+echo "#####################################"
+echo "### Enter below as a regular user ###"
+echo "#####################################"
+echo ""
 echo "mkdir -p $HOME/.kube"
 echo "sudo cp /etc/kubernetes/admin.conf $HOME/.kube/config"
 echo "sudo chown $(id -u):$(id -g) $HOME/.kube/config"

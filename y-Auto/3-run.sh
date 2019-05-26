@@ -58,7 +58,7 @@ sudo helm install --name consul-traefik stable/consul --set ImageTag=1.4.4 --nam
 sleep 30s
 
 # Traefik - Internal
-kctl apply -f traefik-internal.yaml
+#kctl apply -f traefik-internal.yaml
 # kubectl apply -f traefik-internal.yaml --namespace="kube-system"
 
 # Traefik - External
