@@ -172,7 +172,7 @@ metadata:
     traefik.frontend.rule.type: PathPrefix
 spec:
   rules:
-  - host: dashboard-int.goldenpassport.net
+  - host: dashboard.int.goldenpassport.net
     http:
       paths:
       - path: /
