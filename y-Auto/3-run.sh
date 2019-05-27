@@ -122,6 +122,7 @@ data:
         #entryPoint="http"
       [acme.dnsChallenge]
         delayBeforeCheck = 0
+        resolvers = ["220.233.0.3", "220.233.0.4"]
         provider = "namecheap"
         [namecheap]
           NAMECHEAP_API_USER = "lukepa"
