@@ -164,25 +164,6 @@ spec:
 apiVersion: extensions/v1beta1
 kind: Ingress
 metadata:
-  name: kubernetes-dashboard-internal
-  namespace: kube-system
-  labels:
-    traffic-type: internal
-  annotations:
-    traefik.frontend.rule.type: PathPrefix
-spec:
-  rules:
-  - host: dashboard.int.goldenpassport.net
-    http:
-      paths:
-      - path: /
-        backend:
-          serviceName: kubernetes-dashboard
-          servicePort: 80
----
-apiVersion: extensions/v1beta1
-kind: Ingress
-metadata:
   name: kubernetes-dashboard-external
   namespace: kube-system
   labels:
@@ -192,8 +173,8 @@ metadata:
     traefik.frontend.redirect.entryPoint: https
     traefik.frontend.redirect.regex: ^http://(.*)
     traefik.frontend.redirect.replacement: https://$1
-    #ingress.kubernetes.io/auth-type: basic
-    #ingress.kubernetes.io/auth-secret: ingress-auth
+    ingress.kubernetes.io/auth-type: basic
+    ingress.kubernetes.io/auth-secret: ingress-auth
 spec:
   rules:
   - host: dashboard.goldenpassport.net
