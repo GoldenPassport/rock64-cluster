@@ -1,9 +1,9 @@
 #!/bin/bash
 
 # Install docker
-sudo apt-get install -y aufs-tools debootstrap docker-doc rinse zfsutils-linux nfs-kernel-server cgroupfs-mount
+sudo apt-get install -y aufs-tools debootstrap rinse zfsutils-linux nfs-kernel-server cgroupfs-mount
 sudo apt install -y docker.io
-sudo apt-get install -y docker-compose
+sudo apt-get install -y docker-compose docker-doc 
 
 # Restart docker
 systemctl daemon-reload
