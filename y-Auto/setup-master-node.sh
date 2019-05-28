@@ -40,7 +40,7 @@ sleep 15s
 # Step 2 - Prepare system and install: Docker, Kubernetes & Helm
 #
 
-set -xeo pipefail
+set -xeo
 
 # Update system
 sudo apt update
