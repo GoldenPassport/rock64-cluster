@@ -160,7 +160,14 @@ if ! [ -x "$(command -v helm)" ]; then
 fi
 
 sudo apt -y autoremove
-sleep 15s
+sleep 5s
+
+mkdir -p $HOME/.kube
+sudo cp /etc/kubernetes/admin.conf $HOME/.kube/config
+sudo chown $(id -u):$(id -g) $HOME/.kube/config
+
+kubectl taint nodes --all node-role.kubernetes.io/master-
+sleep 5s
 
 #echo ""
 #echo "#####################################"
@@ -180,13 +187,6 @@ rm ingress_auth.tmp
 #
 # Step 3 - Install Flannel, MetalLB and (Kube) Dashboards
 #
-
-# Prep
-mkdir -p $HOME/.kube
-sudo cp /etc/kubernetes/admin.conf $HOME/.kube/config
-sudo chown $(id -u):$(id -g) $HOME/.kube/config
-
-kubectl taint nodes --all node-role.kubernetes.io/master-
 
 echo ""
 echo "#####################################"
