@@ -2,6 +2,7 @@
 
 # Reset if needed
 sudo kubeadm reset -f
+sudo iptables -F && iptables -t nat -F && iptables -t mangle -F && iptables -X
 
 # Install docker
 sudo apt-get install -y aufs-tools debootstrap rinse zfsutils-linux nfs-kernel-server cgroupfs-mount

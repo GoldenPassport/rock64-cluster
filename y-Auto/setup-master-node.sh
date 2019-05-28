@@ -22,11 +22,11 @@ sudo kubeadm reset -f
 # Step 2 - Prepare system and install: Docker, Kubernetes & Helm
 #
 
-set -xeo pipefail
+sudo set -xeo pipefail
 
 # Update
-apt update
-apt -y upgrade
+sudo apt update
+sudo apt -y upgrade
 
 # Reset ip tables
 sudo iptables -F && iptables -t nat -F && iptables -t mangle -F && iptables -X
@@ -34,7 +34,7 @@ sudo iptables -F && iptables -t nat -F && iptables -t mangle -F && iptables -X
 # Disable swap
 sudo swapoff -a 
 sudo sed -i '/ swap / s/^\(.*\)$/#\1/g' /etc/fstab
-systemctl disable armbian-zram-config.service
+sudo systemctl disable armbian-zram-config.service
 
 ### Install packages to allow apt to use a repository over HTTPS
 sudo apt-get update
@@ -77,14 +77,14 @@ sudo apt-get install -y docker-compose
 #mkdir -p /etc/systemd/system/docker.service.d
 
 # Restart docker
-systemctl daemon-reload
-systemctl start docker
-systemctl enable docker
-systemctl restart docker
+sudo systemctl daemon-reload
+sudo systemctl start docker
+sudo systemctl enable docker
+sudo systemctl restart docker
 
 # Add user to docker group
-usermod -aG docker $USER
-usermod -aG docker rock
+sudo usermod -aG docker $USER
+sudo usermod -aG docker rock
 
 #
 # Install Kubernetes
@@ -92,29 +92,29 @@ usermod -aG docker rock
 
 # Uninstall current packages
 { 
-    apt-get purge -y kubelet
+    sudo apt-get purge -y kubelet
     echo "Successfully removed kubelet"
 } || { 
     echo "kubelet not installed."
 }
 
 { 
-    apt-get purge -y kubeadm
+    sudo apt-get purge -y kubeadm
     echo "Successfully removed kubeadm"
 } || { 
     echo "kubeadm not installed."
 }
 
 { 
-    apt-get purge -y kubectl
+    sudo apt-get purge -y kubectl
     echo "Successfully removed kubectl"
 } || { 
     echo "kubectl not installed."
 }
 
-curl -s https://packages.cloud.google.com/apt/doc/apt-key.gpg | apt-key add -
+sudo curl -s https://packages.cloud.google.com/apt/doc/apt-key.gpg | apt-key add -
 
-cat <<EOF >/etc/apt/sources.list.d/kubernetes.list
+sudo cat <<EOF >/etc/apt/sources.list.d/kubernetes.list
 deb http://apt.kubernetes.io/ kubernetes-xenial main
 EOF
 
