@@ -224,7 +224,7 @@ kctl apply -f tiller.yaml
 sleep 15s
 
 sudo helm init --service-account tiller --tiller-image jessestuart/tiller
-sleep 60s
+sleep 30s
 # Patch Helm to land on an ARM node because of the used image
 kubectl patch deployment tiller-deploy -n kube-system --patch '{"spec": {"template": {"spec": {"nodeSelector": {"beta.kubernetes.io/arch": "arm64"}}}}}'
 sleep 15s
@@ -311,7 +311,7 @@ data:
       [[acme.domains]]
         main = "*.goldenpassport.net"
 EOF
-sleep 30s
+sleep 5s
 
 cat <<EOF | kubectl create -f -
 apiVersion: batch/v1
@@ -365,4 +365,4 @@ printf "\n### Enter below as a regular user ###"
 printf "\n#####################################\n"
 printf '\nmkdir -p $HOME/.kube'
 printf '\nsudo cp /etc/kubernetes/admin.conf $HOME/.kube/config'
-printf '\nsudo chown $(id -u):$(id -g) $HOME/.kube/config'
+printf '\nsudo chown $(id -u):$(id -g) $HOME/.kube/config\n\n'
