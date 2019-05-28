@@ -225,7 +225,13 @@ sleep 5s
 #sudo helm repo update
 #sudo helm reset
 
-kubectl delete secret traefik-external-provider -n kube-system
+{ 
+    kubectl delete secret traefik-external-provider -n kube-system
+    echo "Secret traefik-external-provider deleted"
+} || { 
+    echo "No secret for traefik-external-provider"
+}
+
 kubectl create secret generic traefik-external-provider -n kube-system --from-literal=key=dKD9mjoUALrT_7sHz1qAfFZe83Q5f2MbGsm --from-literal=secret=7sK1dHWLhoLexnfmzXJWcb
 
 # Tiller role
