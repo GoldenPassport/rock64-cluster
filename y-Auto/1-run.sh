@@ -58,13 +58,13 @@ sudo apt-get install -y docker-compose
 
 #mkdir -p /etc/systemd/system/docker.service.d
 
-# Restart docker.
+# Restart docker
 systemctl daemon-reload
 systemctl start docker
 systemctl enable docker
 systemctl restart docker
 
-# Add User to Docker Group
+# Add user to docker group
 usermod -aG docker $USER
 usermod -aG docker rock
 
