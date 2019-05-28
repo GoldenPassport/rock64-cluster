@@ -167,10 +167,15 @@ sleep 15s
 #echo "### Enter user (rock) secret      ###"
 #echo "#####################################"
 
-#printf "rock:`openssl passwd -apr1`\n" > ingress_auth.tmp
-#kubectl delete secret -n kube-system ingress-auth
-#kubectl create secret generic ingress-auth --from-file=ingress_auth.tmp -n kube-system 
-#rm ingress_auth.tmp
+printf "rock:`openssl passwd -apr1`\n" > ingress_auth.tmp
+{ 
+    kubectl delete secret -n kube-system ingress-auth
+    echo "ingress-auth secret deleted"
+} || { 
+    echo "ingress-auth secret not found"
+}
+kubectl create secret generic ingress-auth --from-file=ingress_auth.tmp -n kube-system 
+rm ingress_auth.tmp
 
 #
 # Step 3 - Install Flannel, MetalLB and (Kube) Dashboards
@@ -187,7 +192,7 @@ echo ""
 echo "#####################################"
 echo "### You have 60 secs to add nodes  ###"
 echo "#####################################"
-sleep 60s
+sleep 10s
 
 # Flannel
 kubectl apply -f https://raw.githubusercontent.com/coreos/flannel/a70459be0084506e4ec919aa1c114638878db11b/Documentation/kube-flannel.yml
