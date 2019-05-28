@@ -26,3 +26,6 @@ EOF
 
 sudo apt-get update
 sudo apt-get install -y kubelet kubeadm kubectl
+
+sudo apt -y upgrade
+sudo apt -y autoremove
