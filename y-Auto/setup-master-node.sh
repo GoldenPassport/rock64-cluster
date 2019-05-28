@@ -18,6 +18,8 @@ kubectl delete node rock4
 
 sudo kubeadm reset -f
 
+sleep 15s
+
 #
 # Step 2 - Prepare system and install: Docker, Kubernetes & Helm
 #
@@ -156,9 +158,9 @@ sudo apt -y autoremove
 
 echo ""
 echo "#####################################"
-echo "### You have 3 mins to add nodes  ###"
+echo "### You have 60 secs to add nodes  ###"
 echo "#####################################"
-sleep 360s
+sleep 60s
 
 #
 # Step 3 - Install storageClass and Traefik
