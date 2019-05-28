@@ -1,0 +1,148 @@
+kind: Deployment
+apiVersion: extensions/v1beta1
+metadata:
+  name: bear
+  labels:
+    app: animals
+    animal: bear
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: animals
+      task: bear
+  template:
+    metadata:
+      labels:
+        app: animals
+        task: bear
+        version: v0.0.1
+    spec:
+      containers:
+      - name: bear
+        image: supergiantkir/animals:bear
+        ports:
+        - containerPort: 80
+---
+kind: Deployment
+apiVersion: extensions/v1beta1
+metadata:
+  name: moose
+  labels:
+    app: animals
+    animal: moose
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: animals
+      task: moose
+  template:
+    metadata:
+      labels:
+        app: animals
+        task: moose
+        version: v0.0.1
+    spec:
+      containers:
+      - name: moose
+        image: supergiantkir/animals:moose
+        ports:
+        - containerPort: 80
+---
+kind: Deployment
+apiVersion: extensions/v1beta1
+metadata:
+  name: hare
+  labels:
+    app: animals
+    animal: hare
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: animals
+      task: hare
+  template:
+    metadata:
+      labels:
+        app: animals
+        task: hare
+        version: v0.0.1
+    spec:
+      containers:
+      - name: hare
+        image: supergiantkir/animals:hare
+        ports:
+        - containerPort: 80
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: bear
+spec:
+  ports:
+  - name: http
+    targetPort: 80
+    port: 80
+  selector:
+    app: animals
+    task: bear
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: moose
+spec:
+  ports:
+  - name: http
+    targetPort: 80
+    port: 80
+  selector:
+    app: animals
+    task: moose
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: hare
+  annotations:
+    traefik.backend.circuitbreaker: "NetworkErrorRatio() > 0.5"
+spec:
+  ports:
+  - name: http
+    targetPort: 80
+    port: 80
+  selector:
+    app: animals
+    task: hare
+---
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  name: animals
+  annotations:
+    kubernetes.io/ingress.class: traefik
+spec:
+  rules:
+  - host: hare.goldenpassport.net
+    http:
+      paths:
+      - path: /
+        backend:
+          serviceName: hare
+          servicePort: http
+  - host: hare.goldenpassport.net
+    http:
+      paths:
+      - path: /
+        backend:
+          serviceName: bear
+          servicePort: http
+  - host: hare.goldenpassport.net
+    http:
+      paths:
+      - path: /
+        backend:
+          serviceName: moose
+          servicePort: http
