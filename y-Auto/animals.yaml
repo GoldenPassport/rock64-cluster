@@ -20,7 +20,7 @@ spec:
     spec:
       containers:
       - name: cheese
-        image: errm/cheese:stilton
+        image: arm64v8/nginx
         resources:
           requests:
             cpu: 100m
@@ -53,7 +53,7 @@ spec:
     spec:
       containers:
       - name: cheese
-        image: errm/cheese:cheddar
+        image: arm64v8/nginx
         resources:
           requests:
             cpu: 100m
