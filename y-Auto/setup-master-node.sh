@@ -160,6 +160,7 @@ if ! [ -x "$(command -v helm)" ]; then
 fi
 
 sudo apt -y autoremove
+sleep 15s
 
 #echo ""
 #echo "#####################################"
@@ -171,12 +172,6 @@ sudo apt -y autoremove
 #kubectl create secret generic ingress-auth --from-file=ingress_auth.tmp -n kube-system 
 #rm ingress_auth.tmp
 
-echo ""
-echo "#####################################"
-echo "### You have 60 secs to add nodes  ###"
-echo "#####################################"
-sleep 60s
-
 #
 # Step 3 - Install Flannel, MetalLB and (Kube) Dashboards
 #
@@ -187,7 +182,12 @@ sudo cp /etc/kubernetes/admin.conf $HOME/.kube/config
 sudo chown $(id -u):$(id -g) $HOME/.kube/config
 
 kubectl taint nodes --all node-role.kubernetes.io/master-
-sleep 10s
+
+echo ""
+echo "#####################################"
+echo "### You have 60 secs to add nodes  ###"
+echo "#####################################"
+sleep 60s
 
 # Flannel
 kubectl apply -f https://raw.githubusercontent.com/coreos/flannel/a70459be0084506e4ec919aa1c114638878db11b/Documentation/kube-flannel.yml
