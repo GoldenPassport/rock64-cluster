@@ -33,13 +33,12 @@ spec:
   selector:
     app: hellow-world
   ports:
-    - protocol: TCP
-      port: 80
-      name: http
-    - protocol: TCP
-      port: 443
-      name: https
-  type: NodePort
+  - name: http
+    targetPort: 80
+    port: 80
+  - name: https
+    targetPort: 443
+    port: 443
 
 ---
 apiVersion: extensions/v1beta1
