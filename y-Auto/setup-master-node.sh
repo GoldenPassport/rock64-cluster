@@ -15,25 +15,6 @@ kctl() {
     kubectl --namespace "$NAMESPACE" "$@"
 }
 
-set -o xtrace
-
-printf "\n\n#####################################"
-printf "\n### Enter below as a regular user ###"
-printf "\n#####################################\n"
-printf '\nmkdir -p $HOME/.kube'
-printf '\nsudo cp /etc/kubernetes/admin.conf $HOME/.kube/config'
-printf '\nsudo chown $(id -u):$(id -g) $HOME/.kube/config'
-
-set +o xtrace
-printf "\n\n#####################################"
-printf "\n### Enter below as a regular user ###"
-printf "\n#####################################\n"
-printf '\nmkdir -p $HOME/.kube'
-printf '\nsudo cp /etc/kubernetes/admin.conf $HOME/.kube/config'
-printf '\nsudo chown $(id -u):$(id -g) $HOME/.kube/config'
-
-exit code 0
-
 set -xeo pipefail
 
 #
@@ -189,6 +170,7 @@ sudo chown $(id -u):$(id -g) $HOME/.kube/config
 kubectl taint nodes --all node-role.kubernetes.io/master-
 sleep 5s
 
+set +o xtrace
 printf "\n\n#####################################"
 printf "\n### Enter user (rock) secret      ###"
 printf "\n#####################################\n\n"
@@ -196,6 +178,7 @@ printf "\n#####################################\n\n"
 printf "rock:`openssl passwd -apr1`\n" > ingress_auth.tmp
 kubectl create secret generic ingress-auth --from-file=ingress_auth.tmp -n kube-system 
 rm ingress_auth.tmp
+set -o xtrace
 
 #
 # Step 3 - Install Flannel, MetalLB and (Kube) Dashboards
@@ -376,6 +359,7 @@ kubectl apply -f hello-world.yaml
 # Step 5 - Final instructions
 #
 
+set +o xtrace
 printf "\n\n#####################################"
 printf "\n### Enter below as a regular user ###"
 printf "\n#####################################\n"
