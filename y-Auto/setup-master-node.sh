@@ -1,5 +1,20 @@
 #!/bin/bash
 
+if [ -z "${KUBECONFIG}" ]; then
+    export KUBECONFIG=~/.kube/config
+fi
+
+# CAUTION - setting NAMESPACE will deploy most components to the given namespace
+# however some are hardcoded to 'monitoring'. Only use if you have reviewed all manifests.
+
+if [ -z "${NAMESPACE}" ]; then
+    NAMESPACE=kube-system
+fi
+
+kctl() {
+    kubectl --namespace "$NAMESPACE" "$@"
+}
+
 #
 # Step 1 - Prepares system and installs: Docker, Kubernetes & Helm
 #
@@ -163,23 +178,33 @@ echo "#####################################"
 sleep 60s
 
 #
-# Step 3 - Install storageClass and Traefik
+# Step 3 - Install Flannel, MetalLB and (Kube) Dashboards
 #
 
-if [ -z "${KUBECONFIG}" ]; then
-    export KUBECONFIG=~/.kube/config
-fi
+# Prep
+mkdir -p $HOME/.kube
+sudo cp /etc/kubernetes/admin.conf $HOME/.kube/config
+sudo chown $(id -u):$(id -g) $HOME/.kube/config
 
-# CAUTION - setting NAMESPACE will deploy most components to the given namespace
-# however some are hardcoded to 'monitoring'. Only use if you have reviewed all manifests.
+kubectl taint nodes --all node-role.kubernetes.io/master-
+sleep 10s
 
-if [ -z "${NAMESPACE}" ]; then
-    NAMESPACE=kube-system
-fi
+# Flannel
+kubectl apply -f https://raw.githubusercontent.com/coreos/flannel/a70459be0084506e4ec919aa1c114638878db11b/Documentation/kube-flannel.yml
+sleep 10s
 
-kctl() {
-    kubectl --namespace "$NAMESPACE" "$@"
-}
+# MetalLB
+kubectl apply -f https://raw.githubusercontent.com/google/metallb/v0.7.3/manifests/metallb.yaml
+kubectl apply -f metallb.yaml
+
+# Dashboard
+kctl apply -f dashboard.yaml
+# kubectl apply -f dashboard.yaml --namespace="kube-system"
+
+
+#
+# Step 4 - Install storageClass and Traefik
+#
 
 # Remove previous setup
 #kubectl delete -f .
