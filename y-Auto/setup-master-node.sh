@@ -22,7 +22,7 @@ sudo kubeadm reset -f
 # Step 2 - Prepare system and install: Docker, Kubernetes & Helm
 #
 
-sudo set -xeo pipefail
+set -xeo pipefail
 
 # Update
 sudo apt update
