@@ -15,8 +15,6 @@ kctl() {
     kubectl --namespace "$NAMESPACE" "$@"
 }
 
-set -xeo pipefail
-
 #
 # Step 1 - Prepares system and installs: Docker, Kubernetes & Helm
 #
@@ -41,6 +39,8 @@ sleep 15s
 #
 # Step 2 - Prepare system and install: Docker, Kubernetes & Helm
 #
+
+set -xeo pipefail
 
 # Update system
 sudo apt update
