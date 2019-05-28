@@ -244,8 +244,14 @@ kubectl patch deployment tiller-deploy -n kube-system --patch '{"spec": {"templa
 sleep 15s
 
 # Consul
-sudo helm del --purge consul-traefik
+{ 
+    sudo helm del --purge consul-traefik
+    echo "helm - consul-traefik deleted"
+} || { 
+    echo "helm - consul-traefik not found"
+}
 sleep 15s
+
 sudo helm install --name consul-traefik stable/consul --set ImageTag=1.4.4 --namespace kube-system
 sleep 30s
 
