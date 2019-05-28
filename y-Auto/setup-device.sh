@@ -49,7 +49,7 @@ systemctl disable armbian-zram-config.service
 #sudo printf "rock ALL=(ALL) NOPASSWD:ALL" >> visudo
 
 # Create SSH Keys
-ssh-keygen -t rsa
+#ssh-keygen -t rsa
 
 echo "#####################################"
 echo "### COMPLETED! PLEASE REBOOT      ###"

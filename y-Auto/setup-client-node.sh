@@ -15,27 +15,6 @@ usermod -aG docker $USER
 usermod -aG docker rock
 
 # Install kubernetes
-{ 
-    apt-get purge -y kubelet
-    echo "Successfully removed kubelet"
-} || { 
-    echo "kubelet not installed."
-}
-
-{ 
-    apt-get purge -y kubeadm
-    echo "Successfully removed kubeadm"
-} || { 
-    echo "kubeadm not installed."
-}
-
-{ 
-    apt-get purge -y kubectl
-    echo "Successfully removed kubectl"
-} || { 
-    echo "kubectl not installed."
-}
-
 curl -s https://packages.cloud.google.com/apt/doc/apt-key.gpg | apt-key add -
 
 cat <<EOF >/etc/apt/sources.list.d/kubernetes.list
