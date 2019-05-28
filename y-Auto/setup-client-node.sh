@@ -18,8 +18,11 @@ usermod -aG docker rock
 # Install kubernetes
 curl -s https://packages.cloud.google.com/apt/doc/apt-key.gpg | apt-key add -
 
+sudo printf "net.ipv6.conf.all.disable_ipv6 = 1\nnet.ipv6.conf.default.disable_ipv6 = 1\nnet.ipv6.conf.lo.disable_ipv6 = 1\nnet.ipv6.conf.eth0.disable_ipv6 = 1" >> /etc/sysctl.conf
+
 cat <<EOF >/etc/apt/sources.list.d/kubernetes.list
 deb http://apt.kubernetes.io/ kubernetes-xenial main
 EOF
 
+sudo apt-get update
 sudo apt-get install -y kubelet kubeadm kubectl
