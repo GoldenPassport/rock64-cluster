@@ -1,14 +1,5 @@
 #!/usr/bin/env bash
 
-printf "\n\n#####################################"
-printf "\n### Enter below as a regular user ###"
-printf "\n#####################################"
-printf '\nmkdir -p $HOME/.kube'
-printf '\nsudo cp /etc/kubernetes/admin.conf $HOME/.kube/config'
-printf '\nsudo chown $(id -u):$(id -g) $HOME/.kube/config'
-
-exit o
-
 if [ -z "${KUBECONFIG}" ]; then
     export KUBECONFIG=~/.kube/config
 fi
@@ -180,7 +171,7 @@ sleep 5s
 
 printf "\n\n#####################################"
 printf "\n### Enter user (rock) secret      ###"
-printf "\n#####################################\n"
+printf "\n#####################################\n\n"
 
 printf "rock:`openssl passwd -apr1`\n" > ingress_auth.tmp
 kubectl create secret generic ingress-auth --from-file=ingress_auth.tmp -n kube-system 
@@ -367,7 +358,7 @@ kubectl apply -f hello-world.yaml
 
 printf "\n\n#####################################"
 printf "\n### Enter below as a regular user ###"
-printf "\n#####################################"
+printf "\n#####################################\n"
 printf '\nmkdir -p $HOME/.kube'
 printf '\nsudo cp /etc/kubernetes/admin.conf $HOME/.kube/config'
 printf '\nsudo chown $(id -u):$(id -g) $HOME/.kube/config'
