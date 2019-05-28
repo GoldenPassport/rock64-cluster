@@ -175,12 +175,6 @@ sleep 5s
 #echo "#####################################"
 
 printf "rock:`openssl passwd -apr1`\n" > ingress_auth.tmp
-{ 
-    kubectl delete secret -n kube-system ingress-auth
-    echo "ingress-auth secret deleted"
-} || { 
-    echo "ingress-auth secret not found"
-}
 kubectl create secret generic ingress-auth --from-file=ingress_auth.tmp -n kube-system 
 rm ingress_auth.tmp
 
@@ -227,15 +221,6 @@ sleep 5s
 #
 # Tiller / Consul
 #
-#sudo helm repo update
-#sudo helm reset
-
-{ 
-    kubectl delete secret traefik-external-provider -n kube-system
-    echo "Secret traefik-external-provider deleted"
-} || { 
-    echo "No secret for traefik-external-provider"
-}
 kubectl create secret generic traefik-external-provider -n kube-system --from-literal=key=dKD9mjoUALrT_7sHz1qAfFZe83Q5f2MbGsm --from-literal=secret=7sK1dHWLhoLexnfmzXJWcb
 
 # Tiller role
@@ -265,14 +250,6 @@ sleep 30s
 # kubectl apply -f traefik-internal.yaml --namespace="kube-system"
 
 # Traefik - External
-{ 
-    kctl delete configmap traefik-conf-external
-    echo "configmap traefik-conf-external deleted"
-} || { 
-    echo "configmap traefik-conf-external not found"
-}
-sleep 15s
-
 cat <<EOF | kubectl create -f -
 apiVersion: v1
 kind: ConfigMap
@@ -339,14 +316,6 @@ data:
         main = "*.goldenpassport.net"
 EOF
 sleep 30s
-
-{ 
-    kctl delete job traefik-kv-store
-    echo "job traefik-kv-store deleted"
-} || { 
-    echo "job traefik-kv-store deleted not found"
-}
-sleep 15s
 
 cat <<EOF | kubectl create -f -
 apiVersion: batch/v1
