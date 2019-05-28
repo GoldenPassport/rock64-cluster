@@ -1,9 +1,13 @@
 #!/usr/bin/env bash
 
 printf "\n\n#####################################"
-printf "\n### Enter user (rock) secret      ###"
+printf "\n### Enter below as a regular user ###"
 printf "\n#####################################"
-exit 0
+printf '\nmkdir -p $HOME/.kube'
+printf '\nsudo cp /etc/kubernetes/admin.conf $HOME/.kube/config'
+printf '\nsudo chown $(id -u):$(id -g) $HOME/.kube/config'
+
+exit o
 
 if [ -z "${KUBECONFIG}" ]; then
     export KUBECONFIG=~/.kube/config
@@ -174,10 +178,9 @@ sudo chown $(id -u):$(id -g) $HOME/.kube/config
 kubectl taint nodes --all node-role.kubernetes.io/master-
 sleep 5s
 
-printf ""
-printf "#####################################"
-printf "### Enter user (rock) secret      ###"
-printf "#####################################"
+printf "\n\n#####################################"
+printf "\n### Enter user (rock) secret      ###"
+printf "\n#####################################\n"
 
 printf "rock:`openssl passwd -apr1`\n" > ingress_auth.tmp
 kubectl create secret generic ingress-auth --from-file=ingress_auth.tmp -n kube-system 
@@ -362,11 +365,9 @@ kubectl apply -f hello-world.yaml
 # Step 5 - Final instructions
 #
 
-printf ""
-printf "#####################################"
-printf "### Enter below as a regular user ###"
-printf "#####################################"
-printf ""
-printf 'mkdir -p $HOME/.kube'
-printf 'sudo cp /etc/kubernetes/admin.conf $HOME/.kube/config'
-printf 'sudo chown $(id -u):$(id -g) $HOME/.kube/config'
+printf "\n\n#####################################"
+printf "\n### Enter below as a regular user ###"
+printf "\n#####################################"
+printf '\nmkdir -p $HOME/.kube'
+printf '\nsudo cp /etc/kubernetes/admin.conf $HOME/.kube/config'
+printf '\nsudo chown $(id -u):$(id -g) $HOME/.kube/config'
