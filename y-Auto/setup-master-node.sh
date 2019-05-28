@@ -1,5 +1,11 @@
 #!/usr/bin/env bash
 
+printf ""
+printf "#####################################"
+printf "### Enter user (rock) secret      ###"
+printf "#####################################"
+exit 0
+
 if [ -z "${KUBECONFIG}" ]; then
     export KUBECONFIG=~/.kube/config
 fi
@@ -169,10 +175,10 @@ sudo chown $(id -u):$(id -g) $HOME/.kube/config
 kubectl taint nodes --all node-role.kubernetes.io/master-
 sleep 5s
 
-#echo ""
-#echo "#####################################"
-#echo "### Enter user (rock) secret      ###"
-#echo "#####################################"
+printf ""
+printf "#####################################"
+printf "### Enter user (rock) secret      ###"
+printf "#####################################"
 
 printf "rock:`openssl passwd -apr1`\n" > ingress_auth.tmp
 kubectl create secret generic ingress-auth --from-file=ingress_auth.tmp -n kube-system 
@@ -181,12 +187,6 @@ rm ingress_auth.tmp
 #
 # Step 3 - Install Flannel, MetalLB and (Kube) Dashboards
 #
-
-echo ""
-echo "#####################################"
-echo "### You have 60 secs to add nodes  ###"
-echo "#####################################"
-sleep 10s
 
 # Flannel
 kubectl apply -f https://raw.githubusercontent.com/coreos/flannel/a70459be0084506e4ec919aa1c114638878db11b/Documentation/kube-flannel.yml
@@ -363,11 +363,11 @@ kubectl apply -f hello-world.yaml
 # Step 5 - Final instructions
 #
 
-echo ""
-echo "#####################################"
-echo "### Enter below as a regular user ###"
-echo "#####################################"
-echo ""
-echo "mkdir -p $HOME/.kube"
-echo "sudo cp /etc/kubernetes/admin.conf $HOME/.kube/config"
-echo "sudo chown $(id -u):$(id -g) $HOME/.kube/config"
+printf ""
+printf "#####################################"
+printf "### Enter below as a regular user ###"
+printf "#####################################"
+printf ""
+printf 'mkdir -p $HOME/.kube'
+printf 'sudo cp /etc/kubernetes/admin.conf $HOME/.kube/config'
+printf 'sudo chown $(id -u):$(id -g) $HOME/.kube/config'
