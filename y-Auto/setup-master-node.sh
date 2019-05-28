@@ -303,11 +303,10 @@ data:
         #entryPoint="http"
       [acme.dnsChallenge]
         delayBeforeCheck = 0
-        resolvers = ["100.64.0.180", "220.233.0.3", "220.233.0.4"]
         provider = "namecheap"
-        [namecheap]
-          NAMECHEAP_API_USER = "lukepa"
-          NAMECHEAP_API_KEY = "87cf40f983264ae698c0499023d354c1"
+        #[namecheap]
+          #NAMECHEAP_API_USER = "lukepa"
+          #NAMECHEAP_API_KEY = "87cf40f983264ae698c0499023d354c1"
       [[acme.domains]]
         main = "*.goldenpassport.net"
 EOF
