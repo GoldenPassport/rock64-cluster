@@ -29,7 +29,7 @@ sudo apt update
 sudo apt -y upgrade
 
 # Reset ip tables
-sudo iptables -F && iptables -t nat -F && iptables -t mangle -F && iptables -X
+iptables -F && iptables -t nat -F && iptables -t mangle -F && iptables -X
 
 # Disable swap
 sudo swapoff -a 
@@ -112,7 +112,7 @@ sudo usermod -aG docker rock
     echo "kubectl not installed."
 }
 
-sudo curl -s https://packages.cloud.google.com/apt/doc/apt-key.gpg | apt-key add -
+curl -s https://packages.cloud.google.com/apt/doc/apt-key.gpg | apt-key add -
 
 sudo cat <<EOF >/etc/apt/sources.list.d/kubernetes.list
 deb http://apt.kubernetes.io/ kubernetes-xenial main
@@ -341,6 +341,15 @@ kubectl apply -f hello-world.yaml
 #
 # Step 5 - Final instructions
 #
+
+if [[ $USER != "root" ]] ; then
+    echo ""
+    echo "#####################################"
+    echo "### Enter below as root ###"
+    echo "#####################################"
+    echo ""
+    echo "iptables -F && iptables -t nat -F && iptables -t mangle -F && iptables -X"
+fi
 
 echo ""
 echo "#####################################"
