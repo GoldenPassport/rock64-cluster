@@ -15,7 +15,7 @@ kctl() {
     kubectl --namespace "$NAMESPACE" "$@"
 }
 
-set -xeo
+set -o xtrace
 
 #
 # Step 1 - Prepares system and installs: Docker, Kubernetes & Helm
