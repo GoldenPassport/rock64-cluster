@@ -15,9 +15,31 @@ kctl() {
     kubectl --namespace "$NAMESPACE" "$@"
 }
 
+set -o xtrace
+
+printf "\n\n#####################################"
+printf "\n### Enter below as a regular user ###"
+printf "\n#####################################\n"
+printf '\nmkdir -p $HOME/.kube'
+printf '\nsudo cp /etc/kubernetes/admin.conf $HOME/.kube/config'
+printf '\nsudo chown $(id -u):$(id -g) $HOME/.kube/config'
+
+set +o xtrace
+printf "\n\n#####################################"
+printf "\n### Enter below as a regular user ###"
+printf "\n#####################################\n"
+printf '\nmkdir -p $HOME/.kube'
+printf '\nsudo cp /etc/kubernetes/admin.conf $HOME/.kube/config'
+printf '\nsudo chown $(id -u):$(id -g) $HOME/.kube/config'
+
+exit code 0
+
+set -xeo pipefail
+
 #
 # Step 1 - Prepares system and installs: Docker, Kubernetes & Helm
 #
+
 sudo helm del --purge consul-traefik
 
 kubectl drain rock1 --delete-local-data --force --ignore-daemonsets
@@ -39,9 +61,7 @@ sleep 15s
 # Step 2 - Prepare system and install: Docker, Kubernetes & Helm
 #
 
-set -xeo pipefail
-
-# Update
+# Update system
 sudo apt update
 sudo apt -y upgrade
 
