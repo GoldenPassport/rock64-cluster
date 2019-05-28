@@ -1,9 +1,8 @@
 #!/usr/bin/env bash
 
-printf ""
-printf "#####################################"
-printf "### Enter user (rock) secret      ###"
-printf "#####################################"
+printf "\n\n#####################################"
+printf "\n### Enter user (rock) secret      ###"
+printf "\n#####################################"
 exit 0
 
 if [ -z "${KUBECONFIG}" ]; then
