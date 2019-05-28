@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 
 if [ -z "${KUBECONFIG}" ]; then
     export KUBECONFIG=~/.kube/config

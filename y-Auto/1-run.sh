@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 # 1-run.sh
 #
 # Prepares system and installs: Docker, Kubernetes & Helm
