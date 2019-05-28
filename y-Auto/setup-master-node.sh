@@ -260,7 +260,12 @@ sleep 30s
 # kubectl apply -f traefik-internal.yaml --namespace="kube-system"
 
 # Traefik - External
-kctl delete configmap traefik-conf-external
+{ 
+    kctl delete configmap traefik-conf-external
+    echo "configmap traefik-conf-external deleted"
+} || { 
+    echo "configmap traefik-conf-external not found"
+}
 sleep 15s
 
 cat <<EOF | kubectl create -f -
@@ -330,7 +335,12 @@ data:
 EOF
 sleep 30s
 
-kctl delete job traefik-kv-store
+{ 
+    kctl delete job traefik-kv-store
+    echo "job traefik-kv-store deleted"
+} || { 
+    echo "job traefik-kv-store deleted not found"
+}
 sleep 15s
 
 cat <<EOF | kubectl create -f -
@@ -378,15 +388,6 @@ kubectl apply -f hello-world.yaml
 #
 # Step 5 - Final instructions
 #
-
-if [[ $USER != "root" ]] ; then
-    echo ""
-    echo "#####################################"
-    echo "### Enter below as root ###"
-    echo "#####################################"
-    echo ""
-    echo "iptables -F && iptables -t nat -F && iptables -t mangle -F && iptables -X"
-fi
 
 echo ""
 echo "#####################################"
