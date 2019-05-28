@@ -96,14 +96,14 @@ metadata:
   name: cheese
 spec:
   rules:
-  - host: stilton.minikube
+  - host: stilton.goldenpassport.net
     http:
       paths:
       - path: /
         backend:
           serviceName: stilton
           servicePort: http
-  - host: cheddar.minikube
+  - host: cheddar.goldenpassport.net
     http:
       paths:
       - path: /
