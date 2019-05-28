@@ -1,5 +1,8 @@
 #!/bin/bash
 
+# Reset if needed
+sudo kubeadm reset -f
+
 # Install docker
 sudo apt-get install -y aufs-tools debootstrap rinse zfsutils-linux nfs-kernel-server cgroupfs-mount
 sudo apt install -y docker.io

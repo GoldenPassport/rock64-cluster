@@ -16,6 +16,16 @@ sudo bash 4-run.sh
 
 echo ""
 echo "#####################################"
+echo "### Enter user (rock) secret      ###"
+echo "#####################################"
+
+printf "rock:`openssl passwd -apr1`\n" >> ingress_auth.tmp
+kubectl delete secret -n kube-system ingress-auth
+kubectl create secret generic ingress-auth --from-file=ingress_auth.tmp -n kube-system 
+rm ingress_auth.tmp
+
+echo ""
+echo "#####################################"
 echo "### Enter below as a regular user ###"
 echo "#####################################"
 echo ""
