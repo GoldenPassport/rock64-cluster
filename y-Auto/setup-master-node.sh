@@ -310,7 +310,7 @@ data:
       [[acme.domains]]
         main = "*.goldenpassport.net"
 EOF
-sleep 5s
+sleep 15s
 
 cat <<EOF | kubectl create -f -
 apiVersion: batch/v1
