@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
-read -p test1
-echo $test1
+read -p "Enter Your Name: "  username
+echo "Welcome $username!"
 
 exit code 0
 
