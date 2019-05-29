@@ -171,11 +171,12 @@ kubectl taint nodes --all node-role.kubernetes.io/master-
 sleep 5s
 
 set +o xtrace
-printf "\n\n#####################################"
-printf "\n### Enter user (rock) secret      ###"
-printf "\n#####################################\n\n"
+printf "\n\n###########################################"
+printf "\n### Enter dashboard admin account details ###"
+printf "\n#############################################\n\n"
 
-printf "rock:`openssl passwd -apr1`\n" > ingress_auth.tmp
+read -p "Enter username: " adminUsername
+printf "$adminUsername:`openssl passwd -apr1`\n" > ingress_auth.tmp
 kubectl create secret generic ingress-auth --from-file=ingress_auth.tmp -n kube-system 
 rm ingress_auth.tmp
 set -o xtrace
@@ -219,7 +220,7 @@ sleep 5s
 set +o xtrace
 printf "\n\n######################################"
 printf "\n### DNS provider API account details ###"
-printf "\n######################################\n"
+printf "\n######################################\n\n"
 
 read -p "Enter key or username: " apiUsername
 read -p "Enter api secret: " apiSecret

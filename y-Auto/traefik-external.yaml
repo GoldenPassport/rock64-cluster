@@ -101,17 +101,17 @@ spec:
         - --configfile=/config/traefik.toml
         env:
           - name: NAMECHEAP_API_USER
-            value: lukepa
-            #valueFrom:
-              #secretKeyRef:
-                #key: key
-                #name: traefik-external-provider
+            #value: lukepa
+            valueFrom:
+              secretKeyRef:
+                key: key
+                name: traefik-external-provider
           - name: NAMECHEAP_API_KEY
-            value: 87cf40f983264ae698c0499023d354c1
-            #valueFrom:
-              #secretKeyRef:
-                #key: secret
-                #name: traefik-external-provider
+            #value: 87cf40f983264ae698c0499023d354c1
+            valueFrom:
+              secretKeyRef:
+                key: secret
+                name: traefik-external-provider
         livenessProbe:
           httpGet:
             path: /health
