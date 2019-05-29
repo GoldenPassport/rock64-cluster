@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
-read test1
-echo test1
+read -p test1
+echo $test1
 
 exit code 0
 
