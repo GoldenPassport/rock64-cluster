@@ -171,7 +171,7 @@ kubectl taint nodes --all node-role.kubernetes.io/master-
 sleep 5s
 
 set +o xtrace
-printf "\n\n###########################################"
+printf "\n\n#############################################"
 printf "\n### Enter dashboard admin account details ###"
 printf "\n#############################################\n\n"
 
@@ -218,9 +218,9 @@ sleep 5s
 #
 
 set +o xtrace
-printf "\n\n######################################"
+printf "\n\n##########################################"
 printf "\n### DNS provider API account details ###"
-printf "\n######################################\n\n"
+printf "\n##########################################\n\n"
 
 read -p "Enter key or username: " apiUsername
 read -p "Enter api secret: " apiSecret
@@ -362,7 +362,14 @@ kubectl apply -f hello-world.yaml
 #
 
 set +o xtrace
+
 printf "\n\n#####################################"
+printf "\n### Kubernetes join string        ###"
+printf "\n#####################################\n"
+kubeadm token create --print-join-command
+
+
+printf "\n\n\n\n#####################################"
 printf "\n### Enter below as a regular user ###"
 printf "\n#####################################\n"
 printf '\nmkdir -p $HOME/.kube'
