@@ -33,13 +33,12 @@ spec: #specifications for our object
     targetPort: 80
     protocol: TCP
   clusterIP: 192.168.1.60
-  type: ClusterIP
+  type: NodePort
 ---
 apiVersion: extensions/v1beta1
 kind: Ingress
 metadata:
-  name: test-ings-rhvulnlb
-  namespace: test-x
+  name: nginx-ingress
 spec:
   backend:
     serviceName: nginx-service 
