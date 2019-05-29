@@ -23,14 +23,27 @@ spec: #specifications for our object
 apiVersion: v1 #version of the API to use
 kind: Service #What kind of object we're deploying
 metadata: #information about our object we're deploying
-  name: ingress-nginx #Name of the service
+  name: nginx-service #Name of the service
 spec: #specifications for our object
-  type: NodePort #Ignore for now discussed in a future post
+  selector: #Label selector used to identify pods
+    app: nginx
   ports: #Ignore for now discussed in a future post
   - name: http
     port: 80
     targetPort: 80
-    nodePort: 30001 
     protocol: TCP
-  selector: #Label selector used to identify pods
-    app: nginx
+  clusterIP: None
+  type: ClusterIP
+---
+apiVersion: v1
+kind: Endpoints
+metadata:
+  name: external-ip
+subsets:
+- addresses:
+  # list all external ips for this service
+  - ip: 192.168.1.60
+  ports:
+  - name: app
+    port: 90
+    protocol: TCP
