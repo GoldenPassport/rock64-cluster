@@ -32,6 +32,7 @@ metadata:
 spec:
   selector:
     app: hellow-world
+  type: NodePort 
   ports:
   - name: http
     targetPort: 80
