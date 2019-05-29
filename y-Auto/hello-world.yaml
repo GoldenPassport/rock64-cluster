@@ -5,7 +5,8 @@ metadata:
   labels:
     app: nginx
 spec:
-  replicas: 3
+  serviceName: nginx
+  replicas: 2
   selector:
     matchLabels:
       app: nginx
@@ -39,3 +40,17 @@ spec:
       name: https
   type: LoadBalancer
   loadBalancerIP: 192.168.1.25
+---
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  name: nginx-ingress
+spec:
+  rules:
+  - host: helloworld.goldenpassport.net
+    http:
+      paths:
+      - path: /
+        backend:
+          serviceName: nginx-service
+          servicePort: http
