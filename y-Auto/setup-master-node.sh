@@ -1,10 +1,5 @@
 #!/usr/bin/env bash
 
-read -p "Enter Your Name: "  username
-echo "Welcome $username!"
-
-exit code 0
-
 if [ -z "${KUBECONFIG}" ]; then
     export KUBECONFIG=~/.kube/config
 fi
@@ -206,8 +201,6 @@ kctl apply -f dashboard.yaml
 # Step 4 - Install storageClass and Traefik
 #
 
-# Remove previous setup
-#kubectl delete -f .
 
 #
 # NFS-Storage
@@ -222,7 +215,16 @@ sleep 5s
 #
 # Tiller / Consul
 #
-kubectl create secret generic traefik-external-provider -n kube-system --from-literal=key=dKD9mjoUALrT_7sHz1qAfFZe83Q5f2MbGsm --from-literal=secret=7sK1dHWLhoLexnfmzXJWcb
+
+set +o xtrace
+printf "\n\n######################################"
+printf "\n### DNS provider API account details ###"
+printf "\n######################################\n"
+
+read -p "Enter key or username: " apiUsername
+read -p "Enter api secret: " apiSecret
+kubectl create secret generic traefik-external-provider -n kube-system --from-literal=key=$apiUsername --from-literal=secret=$apiSecret
+set -o xtrace
 
 # Tiller role
 kctl apply -f tiller.yaml
@@ -298,20 +300,15 @@ data:
       prefix = "traefik-external"
 
     [acme]
-      email = "luke.audie@gmail.com"
+      email = "support@goldenpassport.net"
       storage = "traefik/acme/account"
       acmeLogging = true
       entryPoint = "https"
       onHostRule = true
-      #caServer = "https://acme-staging-v02.api.letsencrypt.org/directory"
-      #[acme.httpChallenge]
-        #entryPoint="http"
+      caServer = "https://acme-staging-v02.api.letsencrypt.org/directory"
       [acme.dnsChallenge]
         delayBeforeCheck = 0
         provider = "namecheap"
-        #[namecheap]
-          #NAMECHEAP_API_USER = "lukepa"
-          #NAMECHEAP_API_KEY = "87cf40f983264ae698c0499023d354c1"
       [[acme.domains]]
         main = "*.goldenpassport.net"
 EOF

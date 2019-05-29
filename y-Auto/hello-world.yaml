@@ -50,9 +50,9 @@ metadata:
   annotations:
     kubernetes.io/ingress.class: traefik
     traefik.frontend.rule.type: PathPrefix
-    traefik.frontend.redirect.entryPoint: https
-    traefik.frontend.redirect.regex: ^http://(.*)
-    traefik.frontend.redirect.replacement: https://$1
+    #traefik.frontend.redirect.entryPoint: https
+    #traefik.frontend.redirect.regex: ^http://(.*)
+    #traefik.frontend.redirect.replacement: https://$1
 spec:
   rules:
   - host: helloworld.goldenpassport.net
