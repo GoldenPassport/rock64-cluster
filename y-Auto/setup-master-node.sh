@@ -1,5 +1,10 @@
 #!/usr/bin/env bash
 
+read test1
+echo test1
+
+exit code 0
+
 if [ -z "${KUBECONFIG}" ]; then
     export KUBECONFIG=~/.kube/config
 fi
