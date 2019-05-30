@@ -32,7 +32,6 @@ metadata:
 spec:
   selector:
     app: hellow-world
-  externalTrafficPolicy: Local
   ports:
   - name: http
     targetPort: 80
