@@ -183,6 +183,9 @@ metadata:
   namespace: kube-system
   labels:
     traffic-type: external
+  annotations:
+    ingress.kubernetes.io/auth-type: basic
+    ingress.kubernetes.io/auth-secret: ingress-auth
 spec:
   rules:
   - host: traefik.goldenpassport.net
@@ -200,6 +203,9 @@ metadata:
   namespace: kube-system
   labels:
     traffic-type: external
+  annotations:
+    ingress.kubernetes.io/auth-type: basic
+    ingress.kubernetes.io/auth-secret: ingress-auth
 spec:
   rules:
   - host: consul.goldenpassport.net
