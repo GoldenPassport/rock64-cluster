@@ -313,7 +313,7 @@ data:
       [[acme.domains]]
         main = "*.goldenpassport.net"
 EOF
-sleep 15s
+sleep 30s
 
 cat <<EOF | kubectl create -f -
 apiVersion: batch/v1
@@ -368,8 +368,7 @@ printf "\n### Kubernetes join string        ###"
 printf "\n#####################################\n"
 kubeadm token create --print-join-command
 
-
-printf "\n\n\n\n#####################################"
+printf "\n\n\n#####################################"
 printf "\n### Enter below as a regular user ###"
 printf "\n#####################################\n"
 printf '\nmkdir -p $HOME/.kube'

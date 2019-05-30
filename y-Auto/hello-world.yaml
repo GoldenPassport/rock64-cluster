@@ -40,8 +40,6 @@ spec:
   - name: https
     targetPort: 443
     port: 443
-  type: NodePort
-
 ---
 apiVersion: extensions/v1beta1
 kind: Ingress
