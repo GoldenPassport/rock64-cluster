@@ -1,49 +1,60 @@
-apiVersion: apps/v1
+apiVersion: apps/v1beta1
 kind: Deployment
 metadata:
-  name: nginx-deployment
+  name: hellow-world-deployment
   labels:
-    app: nginx
+    app: hellow-world
 spec:
-  replicas: 2
+  replicas: 1
   selector:
     matchLabels:
-      app: nginx
+      app: hellow-world
   template:
     metadata:
       labels:
-        app: nginx
+        app: hellow-world
     spec:
       containers:
-      - name: nginx
-        image: nginx:1.7.9
-        ports:
-        - containerPort: 80
+        - image: arm64v8/nginx
+          name: hellow-world
+          ports:
+            - name: http
+              containerPort: 80
+            - name: https
+              containerPort: 443
 ---
-kind: Service
 apiVersion: v1
+kind: Service
 metadata:
-  name: nginx-service
+  name: hellow-world-service
   labels:
-    app: nginx-service
+    app: hellow-world-service
 spec:
   selector:
-    app: nginx
+    app: hellow-world
   externalTrafficPolicy: Local
   ports:
-    - protocol: TCP
-      port: 80
-      name: http
-    - protocol: TCP
-      port: 443
-      name: https
-  type: LoadBalancer
-  loadBalancerIP: 192.168.1.25
+  - name: http
+    targetPort: 80
+    port: 80
+  - name: https
+    targetPort: 443
+    port: 443
+  type: NodePort
+
 ---
 apiVersion: extensions/v1beta1
 kind: Ingress
 metadata:
-  name: nginx-ingress
+  name: hellow-world-ingress
+  labels:
+    traffic-type: external
+  annotations:
+    kubernetes.io/ingress.class: traefik
+    traefik.frontend.rule.type: PathPrefix
+    #traefik.frontend.redirect.entryPoint: https
+    #traefik.frontend.redirect.regex: ^http://(.*)
+    #traefik.frontend.redirect.replacement: https://$1
 spec:
   rules:
   - host: helloworld.goldenpassport.net
@@ -51,5 +62,5 @@ spec:
       paths:
       - path: /
         backend:
-          serviceName: nginx-service
+          serviceName: hellow-world-service
           servicePort: http
