@@ -487,7 +487,8 @@ spec:
       serviceAccountName: prometheus-k8s
       containers:
       - name: prometheus
-        image: napnap75/rpi-prometheus:prometheus-2.1.0
+        #image: napnap75/rpi-prometheus:prometheus-2.1.0
+        images: prom/prometheus-linux-arm64
         args:
           - "--storage.tsdb.retention=10d"
           - "--config.file=/etc/prometheus/prometheus.yaml"
@@ -548,6 +549,7 @@ apiVersion: extensions/v1beta1
 kind: Ingress
 metadata:
   name: prometheus
+  namespace: monitoring
   labels:
     traffic-type: external
   annotations:
