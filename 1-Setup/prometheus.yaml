@@ -519,6 +519,60 @@ spec:
       - name: data-volume
         persistentVolumeClaim:
           claimName: prometheus-claim
+---
+
+# ------------------- Prometheus DaemonSet ------------------- #
+apiVersion: extensions/v1beta1
+kind: DaemonSet
+metadata:
+  name: prometheus-arm-exporter
+  namespace: monitoring
+  labels:
+    app: prometheus
+    component: arm-exporter
+spec:
+  template:
+    metadata:
+      name: prometheus-arm-exporter
+      labels:
+        app: prometheus
+        component: arm-exporter
+    spec:
+      containers:
+      - image: carlosedp/arm_exporter
+        name: arm-exporter
+        ports:
+        - name: prom-arm-exp
+          #^ must be an IANA_SVC_NAME (at most 15 characters, ..)
+          containerPort: 9243
+          hostPort: 9243
+---
+apiVersion: extensions/v1beta1
+kind: DaemonSet
+metadata:
+  name: prometheus-node-exporter
+  namespace: monitoring
+  labels:
+    app: prometheus
+    component: node-exporter
+spec:
+  template:
+    metadata:
+      name: prometheus-node-exporter
+      labels:
+        app: prometheus
+        component: node-exporter
+    spec:
+      containers:
+      - image: napnap75/rpi-prometheus:node_exporter-0.15.2
+        name: prometheus-node-exporter
+        ports:
+        - name: prom-node-exp
+          #^ must be an IANA_SVC_NAME (at most 15 characters, ..)
+          containerPort: 9100
+          hostPort: 9100
+      hostNetwork: true
+      hostPID: true
 
 ---
 # ------------------- Prometheus Service ------------------- #
@@ -540,6 +594,48 @@ spec:
   selector:
     app: prometheus
     component: core
+---
+apiVersion: v1
+kind: Service
+metadata:
+  annotations:
+    prometheus.io/scrape: 'true'
+  name: prometheus-arm-exporter
+  namespace: monitoring
+  labels:
+    app: prometheus
+    component: arm-exporter
+spec:
+  clusterIP: None
+  ports:
+    - name: prometheus-arm-exporter
+      port: 9243
+      protocol: TCP
+  selector:
+    app: prometheus
+    component: arm-exporter
+  type: ClusterIP
+---
+apiVersion: v1
+kind: Service
+metadata:
+  annotations:
+    prometheus.io/scrape: 'true'
+  name: prometheus-node-exporter
+  namespace: monitoring
+  labels:
+    app: prometheus
+    component: node-exporter
+spec:
+  clusterIP: None
+  ports:
+    - name: prometheus-node-exporter
+      port: 9100
+      protocol: TCP
+  selector:
+    app: prometheus
+    component: node-exporter
+  type: ClusterIP
 
 ---
 # ------------------- Prometheus Ingress ------------------- #
