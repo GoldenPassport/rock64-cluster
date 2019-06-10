@@ -533,11 +533,9 @@ metadata:
   annotations:
     prometheus.io/scrape: 'true'
 spec:
-  type: NodePort
   ports:
-    - port: 9090
-      protocol: TCP
-      name: webui
+  - port: 80
+    targetPort: 9090
   selector:
     app: prometheus
     component: core
