@@ -34,11 +34,11 @@ spec:
     app: hellow-world
   ports:
   - name: http
-    targetPort: 80
     port: 80
+    targetPort: 80
   - name: https
-    targetPort: 443
     port: 443
+    targetPort: 443
 ---
 apiVersion: extensions/v1beta1
 kind: Ingress
