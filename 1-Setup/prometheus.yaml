@@ -5,6 +5,21 @@ metadata:
   name: monitoring
 
 ---
+# ------------------- Prometheus PersistentVolumeClaim ------------------- #
+
+kind: PersistentVolumeClaim
+apiVersion: v1
+metadata:
+  name: prometheus-claim
+  namespace: monitoring
+spec:
+  accessModes:
+    - ReadWriteMany
+  resources:
+    requests:
+      storage: 2Gi
+
+---
 # ------------------- Prometheus ConfigMaps ------------------- #
 
 apiVersion: v1
@@ -448,21 +463,6 @@ subjects:
 - kind: ServiceAccount
   name: prometheus-k8s
   namespace: monitoring
-
----
-
-# ------------------- Prometheus PersistentVolumeClaim ------------------- #
-kind: PersistentVolumeClaim
-apiVersion: v1
-metadata:
-  name: prometheus-claim
-  namespace: monitoring
-spec:
-  accessModes:
-    - ReadWriteMany
-  resources:
-    requests:
-      storage: 2Gi
 
 ---
 # ------------------- Prometheus Deployment ------------------- #
