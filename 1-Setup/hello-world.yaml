@@ -1,0 +1,63 @@
+apiVersion: apps/v1beta1
+kind: Deployment
+metadata:
+  name: hellow-world-deployment
+  labels:
+    app: hellow-world
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: hellow-world
+  template:
+    metadata:
+      labels:
+        app: hellow-world
+    spec:
+      containers:
+        - image: arm64v8/nginx
+          name: hellow-world
+          ports:
+            - name: http
+              containerPort: 80
+            - name: https
+              containerPort: 443
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: hellow-world-service
+  labels:
+    app: hellow-world-service
+spec:
+  selector:
+    app: hellow-world
+  ports:
+  - name: http
+    targetPort: 80
+    port: 80
+  - name: https
+    targetPort: 443
+    port: 443
+---
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  name: hellow-world-ingress
+  labels:
+    traffic-type: external
+  annotations:
+    kubernetes.io/ingress.class: traefik
+    traefik.frontend.rule.type: PathPrefix
+    #traefik.frontend.redirect.entryPoint: https
+    #traefik.frontend.redirect.regex: ^http://(.*)
+    #traefik.frontend.redirect.replacement: https://$1
+spec:
+  rules:
+  - host: helloworld.goldenpassport.net
+    http:
+      paths:
+      - path: /
+        backend:
+          serviceName: hellow-world-service
+          servicePort: http
