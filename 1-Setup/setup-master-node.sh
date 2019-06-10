@@ -287,8 +287,8 @@ data:
 
     [metrics]
       [metrics.prometheus]
-      buckets=[0.1,0.3,1.2,5.0]
-      entryPoint = "traefik"
+        buckets=[0.1,0.3,1.2,5.0]
+        entryPoint = "traefik"
 
     [ping]
       entryPoint = "http"

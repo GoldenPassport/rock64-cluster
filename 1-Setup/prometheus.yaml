@@ -487,8 +487,8 @@ spec:
       serviceAccountName: prometheus-k8s
       containers:
       - name: prometheus
-        #image: napnap75/rpi-prometheus:prometheus-2.1.0
-        image: prom/prometheus-linux-arm64
+        image: napnap75/rpi-prometheus:prometheus-2.1.0
+        #image: prom/prometheus-linux-arm64
         args:
           - "--storage.tsdb.retention=10d"
           - "--config.file=/etc/prometheus/prometheus.yaml"
@@ -535,9 +535,12 @@ metadata:
     prometheus.io/scrape: "true"
 spec:
   ports:
-  - port: 80
-    targetPort: 9090
-    name: webui
+  - name: webui
+    port: 80
+    targetPort: 80
+  - name: https
+    port: 443
+    targetPort: 443
   selector:
     app: prometheus
     component: core
@@ -555,8 +558,6 @@ metadata:
   annotations:
     kubernetes.io/ingress.class: traefik
     traefik.frontend.rule.type: PathPrefix
-    ingress.kubernetes.io/auth-type: basic
-    ingress.kubernetes.io/auth-secret: ingress-auth
 spec:
   rules:
   - host: prometheus.goldenpassport.net
