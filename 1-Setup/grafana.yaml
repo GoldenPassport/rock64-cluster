@@ -107,6 +107,8 @@ kind: Ingress
 metadata:
   name: grafana
   namespace: monitoring
+  labels:
+    traffic-type: external
 spec:
   rules:
   - host: grafana.goldenpassport.net
