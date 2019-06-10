@@ -29,7 +29,7 @@ spec:
         emptyDir: {}
       containers:
       - name: metrics-server
-        image: k8s.gcr.io/metrics-server-arm64:v0.3.1
+        image: k8s.gcr.io/metrics-server-arm64:v0.3.3
         command:
           - /metrics-server
           - --kubelet-insecure-tls
