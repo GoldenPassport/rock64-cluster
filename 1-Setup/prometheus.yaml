@@ -535,11 +535,7 @@ metadata:
     prometheus.io/scrape: "true"
 spec:
   ports:
-  - name: webui
-    port: 80
-    targetPort: 9090
-  - name: https
-    port: 443
+  - port: 80
     targetPort: 9090
   selector:
     app: prometheus
@@ -558,8 +554,9 @@ metadata:
   annotations:
     kubernetes.io/ingress.class: traefik
     traefik.frontend.rule.type: PathPrefix
-    ingress.kubernetes.io/auth-type: basic
-    ingress.kubernetes.io/auth-secret: ingress-auth
+    # Does not support authentication
+    #ingress.kubernetes.io/auth-type: basic
+    #ingress.kubernetes.io/auth-secret: ingress-auth
 spec:
   rules:
   - host: prometheus.goldenpassport.net
@@ -568,4 +565,4 @@ spec:
       - path: /
         backend:
           serviceName: prometheus
-          servicePort: webui
+          servicePort: 80
