@@ -537,7 +537,7 @@ spec:
   ports:
   - name: webui
     port: 80
-    targetPort: 80
+    targetPort: 9090
   - name: https
     port: 443
     targetPort: 443
