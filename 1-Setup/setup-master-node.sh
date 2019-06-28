@@ -308,7 +308,7 @@ data:
       acmeLogging = true
       entryPoint = "https"
       onHostRule = true
-      caServer = "https://acme-staging-v02.api.letsencrypt.org/directory"
+      #caServer = "https://acme-staging-v02.api.letsencrypt.org/directory"
       [acme.dnsChallenge]
         delayBeforeCheck = 0
         provider = "namecheap"
@@ -351,6 +351,7 @@ sleep 30s
 kctl apply -f traefik-external.yaml
 #kubectl apply -f traefik-external.yaml --namespace="kube-system"
 kctl apply -f metrics-server.yaml
+kctl apply -f grafana.yaml
 
 #
 # Step 4 - Deploy NodeJs example app
