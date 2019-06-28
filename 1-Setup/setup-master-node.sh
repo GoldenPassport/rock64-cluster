@@ -207,7 +207,7 @@ kctl apply -f dashboard.yaml
 # NFS-Storage
 #
 
-#kubectl apply -f network-storage.yaml
+sudo rm -rf /mnt/storage/*
 kubectl apply -f nfs-storage.yaml
 ##kubectl patch storageclass nfs-network -p '{"metadata": {"annotations":{"storageclass.kubernetes.io/is-default-class":"true"}}}'
 kubectl patch deployment nfs-client-provisioner -n nfs-storage --patch '{"spec": {"template": {"spec": {"nodeSelector": {"beta.kubernetes.io/arch": "arm64"}}}}}'
