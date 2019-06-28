@@ -36,6 +36,7 @@ kubectl delete node rock4
 
 sudo kubeadm reset -f
 sudo rm -rf $HOME/.kube
+sudo rm -rf /var/lib/etcd
 
 sleep 15s
 
