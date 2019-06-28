@@ -1,6 +1,8 @@
 #!/usr/bin/env bash
 
+umount /mnt/storage
 sudo rm -rf /mnt/storage
+
 sudo mkdir -p /mnt/storage
 sudo chown nobody:nogroup /mnt/storage
 sudo chmod 777 /mnt/storage
