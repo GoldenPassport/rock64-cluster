@@ -35,6 +35,7 @@ kubectl drain rock4 --delete-local-data --force --ignore-daemonsets
 kubectl delete node rock4
 
 sudo kubeadm reset -f
+sudo rm -rf $HOME/.kube
 
 sleep 15s
 
@@ -220,7 +221,7 @@ sleep 5s
 
 set +o xtrace
 printf "\n\n##########################################"
-printf "\n### DNS provider API account details ###"
+printf "\n### DNS provider API account details   ###"
 printf "\n##########################################\n\n"
 
 read -p "Enter key or username: " apiUsername
