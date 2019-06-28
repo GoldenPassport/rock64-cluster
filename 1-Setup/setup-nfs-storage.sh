@@ -1,9 +1,11 @@
 #!/usr/bin/env bash
 
 if grep -qs "/mnt/storage" /etc/exports; then
+    echo "11111"
     sudo umount /mnt/storage
     sudo rm -rf /mnt/storage
 else
+    echo "22222"
     sudo cp -a /etc/exports /etc/exports.backup
     printf "/mnt/storage/ 192.168.1.0/24(rw,sync,no_subtree_check,no_root_squash)\n" >> /etc/exports
 fi
