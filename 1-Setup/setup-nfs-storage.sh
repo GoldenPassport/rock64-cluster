@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-if grep -qs '/mnt/storage ' /proc/mounts; then
+if grep -qs "/mnt/storage" /etc/exports; then
     sudo umount /mnt/storage
     sudo rm -rf /mnt/storage
 else
