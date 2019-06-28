@@ -163,6 +163,8 @@ fi
 sudo apt -y autoremove
 sleep 5s
 
+set +o xtrace
+
 mkdir -p $HOME/.kube
 sudo cp /etc/kubernetes/admin.conf $HOME/.kube/config
 sudo chown $(id -u):$(id -g) $HOME/.kube/config
@@ -170,7 +172,6 @@ sudo chown $(id -u):$(id -g) $HOME/.kube/config
 kubectl taint nodes --all node-role.kubernetes.io/master-
 sleep 5s
 
-set +o xtrace
 printf "\n\n#############################################"
 printf "\n### Enter dashboard admin account details ###"
 printf "\n#############################################\n\n"
