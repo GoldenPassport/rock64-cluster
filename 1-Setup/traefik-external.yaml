@@ -1,3 +1,95 @@
+# ------------------- Traefik Job ------------------- #
+
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: traefik-kv-store
+  namespace: kube-system
+spec:
+  backoffLimit: 3
+  activeDeadlineSeconds: 100
+  ttlSecondsAfterFinished: 5
+  template:
+    metadata:
+      name: traefik-kv-store
+    spec:
+      containers:
+      - name: storeconfig
+        image: traefik:v1.7.9
+        imagePullPolicy: IfNotPresent
+        args: [ "storeconfig", "-c", "/config/traefik.toml" ]
+        volumeMounts:
+        - name: config
+          mountPath: /etc/traefik
+          readOnly: true
+      restartPolicy: Never
+      volumes:
+      - name: config
+        configMap:
+          name: traefik-conf-external
+
+---
+# ------------------- Traefik ConfigMap ------------------- #
+
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: traefik-conf-external
+  namespace: kube-system
+data:
+  traefik.toml: |
+    defaultEntryPoints = ["http", "https"]
+    sendAnonymousUsage = false
+    debug = true
+    logLevel = "ERROR"
+
+    [entryPoints]
+      [entryPoints.http]
+      address = ":80"
+        [entryPoints.http.redirect]
+        entryPoint = "https"
+      [entryPoints.https]
+      address = ":443"
+        [entryPoints.https.tls]
+      compress = true
+
+    [api]
+      [api.statistics]
+        recentErrors = 10
+
+    [kubernetes]
+      # Only create ingresses where the object has traffic-type: external label
+      labelselector = "traffic-type=external"
+
+    [metrics]
+      [metrics.prometheus]
+        buckets=[0.1,0.3,1.2,5.0]
+        entryPoint = "traefik"
+
+    [ping]
+      entryPoint = "http"
+
+    [accessLog]
+
+    [consul]
+      endpoint = "consul-traefik.kube-system.svc:8500"
+      watch = true
+      prefix = "traefik-external"
+
+    [acme]
+      email = "support@goldenpassport.net"
+      storage = "traefik/acme/account"
+      acmeLogging = true
+      entryPoint = "https"
+      onHostRule = true
+      caServer = "https://acme-staging-v02.api.letsencrypt.org/directory"
+      [acme.dnsChallenge]
+        delayBeforeCheck = 0
+        provider = "namecheap"
+      [[acme.domains]]
+        main = "*.goldenpassport.net"
+
+---
 # ------------------- Traefik ServiceAccount ------------------- #
 
 apiVersion: v1
