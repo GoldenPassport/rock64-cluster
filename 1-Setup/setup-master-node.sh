@@ -351,7 +351,7 @@ sleep 30s
 kctl apply -f traefik-external.yaml
 #kubectl apply -f traefik-external.yaml --namespace="kube-system"
 kctl apply -f metrics-server.yaml
-kctl apply -f grafana.yaml
+#kubectl apply -f grafana.yaml
 
 #
 # Step 4 - Deploy NodeJs example app
