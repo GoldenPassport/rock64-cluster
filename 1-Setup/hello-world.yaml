@@ -28,7 +28,7 @@ kind: Service
 metadata:
   name: hellow-world-service
   labels:
-    app: hellow-world-service
+    app: hellow-world
 spec:
   selector:
     app: hellow-world
