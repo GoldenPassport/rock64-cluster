@@ -8,15 +8,14 @@ metadata:
 ---
 # ------------------- Jenkins Deployment ------------------- #
 
-apiVersion: apps/v1beta1 # for versions before 1.7.0 use apps/v1beta1
+apiVersion: apps/v1beta1
 kind: Deployment
 metadata:
   name: jenkins-deployment
-  namespace: jenkins
   labels:
     app: jenkins
 spec:
-  replicas: 2
+  replicas: 1
   selector:
     matchLabels:
       app: jenkins
@@ -26,11 +25,11 @@ spec:
         app: jenkins
     spec:
       containers:
-      - name: jenkins
-        image: avelytchko/jenkins
-        ports:
-          - name: http
-            containerPort: 8080
+        - image: avelytchko/jenkins
+          name: jenkins
+          ports:
+            - name: http
+              containerPort: 8080
 
 ---
 # ------------------- Jenkins Service ------------------- #
