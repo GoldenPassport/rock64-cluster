@@ -267,6 +267,7 @@ sleep 30s
 kctl apply -f traefik-external.yaml
 #kubectl apply -f traefik-external.yaml --namespace="kube-system"
 kctl apply -f metrics-server.yaml
+kubectl apply -f prometheus.yaml
 #kubectl apply -f grafana.yaml
 
 #

@@ -417,7 +417,6 @@ data:
       }
 
 ---
-
 # ------------------- Prometheus Service Account ------------------- #
 
 apiVersion: v1

@@ -1,0 +1,18 @@
+## This is an example base values.yaml. It shows how to configure a domain, externalIp as well as smtp
+global:
+  hosts:
+    domain: goldenpassport.net
+    externalIP: 220.233.5.88
+  smtp:
+    enabled: true
+    address: smtp.mailgun.org
+    port: 587
+    user_name: postmaster@sandbox01f1fb1006044b6984f3825b349f87b7.mailgun.org
+    password:
+      secret: smtp-password # https://gitlab.com/charts/gitlab/blob/master/doc/installation/secrets.md#smtp-password
+      key: bbbc6f62c28f9bef271a5feb3322dbe7
+  email:
+    from: postmaster@sandbox01f1fb1006044b6984f3825b349f87b7.mailgun.org
+    display_name: GoldenPassport
+    reply_to: noreply@example.com
+    subject_suffix: " | GoldenPassport"
