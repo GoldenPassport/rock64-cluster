@@ -31,8 +31,6 @@ spec:
         ports:
           - name: http
             containerPort: 8080
-          - name: https
-            containerPort: 8080
 
 ---
 # ------------------- Jenkins Service ------------------- #
@@ -49,9 +47,6 @@ spec:
   ports:
   - name: http
     port: 80
-    targetPort: 8080
-  - name: https
-    port: 443
     targetPort: 8080
 
 ---
