@@ -143,7 +143,7 @@ sudo apt-get install -y kubelet kubeadm kubectl
 
 # Init Kubernetes
 kubeadm config images pull
-#kubeadm init --pod-network-cidr=10.244.0.0/16
+kubeadm init --pod-network-cidr=10.244.0.0/16
 
 sleep 10s
 
