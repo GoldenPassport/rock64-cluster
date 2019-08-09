@@ -172,6 +172,16 @@ sudo chown $(id -u):$(id -g) $HOME/.kube/config
 kubectl taint nodes --all node-role.kubernetes.io/master-
 sleep 5s
 
+# Tiller role
+kctl apply -f tiller.yaml
+sleep 15s
+
+sudo helm init --service-account tiller --tiller-image jessestuart/tiller
+sleep 30s
+# Patch Helm to land on an ARM node because of the used image
+kubectl patch deployment tiller-deploy -n kube-system --patch '{"spec": {"template": {"spec": {"nodeSelector": {"beta.kubernetes.io/arch": "arm64"}}}}}'
+sleep 15s
+
 helm install rancher-latest/rancher \
   --name rancher \
   --namespace cattle-system \
