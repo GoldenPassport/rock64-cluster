@@ -52,3 +52,8 @@ systemctl restart docker
 # Add user to docker group
 usermod -aG docker $USER
 usermod -aG docker rock
+
+docker run -d --restart=unless-stopped \
+  -p 80:80 -p 443:443 \
+  rancher/rancher:v2.2.3-arm64 \
+  --acme-domain rancher.goldenpassport.net
