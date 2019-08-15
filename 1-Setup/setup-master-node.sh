@@ -18,7 +18,7 @@ kctl() {
 set -o xtrace
 
 #
-# Step 1 - Prepares system and installs: Docker, Kubernetes & Helm
+# Step 1 - Reset installation
 #
 
 sudo helm del --purge consul-traefik

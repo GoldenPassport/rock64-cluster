@@ -1,5 +1,14 @@
 #!/usr/bin/env bash
 
+# List devices
+# fdisk -l
+# Get UUIDs
+# blkid
+# mkdir /mnt/storage
+# Update fstab
+# echo "UUID=70b88bba-f5b4-4c62-af60-da6a2a38ea81 /mnt/storage ext4 defaults,noatime,nodiratime,commit=600,errors=remount-ro 0 1" >>  /etc/fstab 
+# sudo mount -a
+
 if grep -qs "/mnt/storage" /etc/exports; then
     sudo umount /mnt/storage
     sudo rm -rf /mnt/storage
