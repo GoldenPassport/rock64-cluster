@@ -7,12 +7,13 @@ set -o xtrace
 #
 
 # Uninstall current packages
-{ 
-    apt purge -y docker.io
-    echo "Successfully removed docker.io"
-} || { 
-    echo "docker.io not installed."
-}
+docker rm -f $(docker ps -qa)
+docker volume rm $(docker volume ls -q)
+cleanupdirs="/var/lib/etcd /etc/kubernetes /etc/cni /opt/cni /var/lib/cni /var/run/calico /opt/rke"
+for dir in $cleanupdirs; do
+  echo "Removing $dir"
+  rm -rf $dir
+done
 
 # Reset ip tables
 iptables -F && iptables -t nat -F && iptables -t mangle -F && iptables -X
@@ -52,8 +53,3 @@ systemctl restart docker
 # Add user to docker group
 usermod -aG docker $USER
 usermod -aG docker rock
-
-docker run -d --restart=unless-stopped \
-  -p 80:80 -p 443:443 \
-  rancher/rancher:v2.2.3-arm64 \
-  --acme-domain rancher.goldenpassport.net
